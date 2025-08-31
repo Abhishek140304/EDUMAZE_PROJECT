@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Attempt</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <main class="main-content" style="width: 100%;">
+            <header class="header"><h1>Physics 101: Chapter 1 Quiz</h1></header>
+            <div class="quiz-attempt-container card">
+                <div class="timer"><i class="far fa-clock"></i> <strong>14:32</strong></div>
+                <form action="/submit-quiz" method="POST">
+                    <div class="question-card">
+                        <h3>1. What is the SI unit of force?</h3>
+                        <label class="option"><input type="radio" name="q1" value="a"> Joule</label>
+                        <label class="option"><input type="radio" name="q1" value="b"> Watt</label>
+                        <label class="option"><input type="radio" name="q1" value="c"> Newton</label>
+                        <label class="option"><input type="radio" name="q1" value="d"> Pascal</label>
+                    </div>
+                     <div class="question-card">
+                        <h3>2. Which law of motion is also known as the law of inertia?</h3>
+                        <label class="option"><input type="radio" name="q2" value="a"> First Law</label>
+                        <label class="option"><input type="radio" name="q2" value="b"> Second Law</label>
+                        <label class="option"><input type="radio" name="q2" value="c"> Third Law</label>
+                        <label class="option"><input type="radio" name="q2" value="d"> Fourth Law</label>
+                    </div>
+                    <button type="submit" class="btn">Submit Quiz</button>
+                </form>
+            </div>
+        </main>
+    </div>
+    <script src="main.js" defer></script>
+</body>
+</html>
