@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <nav class="sidebar">
+            <div class="sidebar-header"><i class="fa-solid fa-graduation-cap"></i><h2>QuizMaster</h2></div>
+            <div class="sidebar-nav">
+                <a href="#" class="active"><i class="fa fa-home"></i> Dashboard</a>
+                <a href="/student_progress.html"><i class="fa fa-chart-line"></i> My Progress</a>
+                <a href="/leaderboard.html"><i class="fa fa-trophy"></i> Leaderboards</a>
+            </div>
+            <div class="sidebar-footer"><a href="/loginpage.html"><i class="fa fa-sign-out-alt"></i> Logout</a></div>
+        </nav>
+        <main class="main-content">
+            <header class="header">
+                <h1>Hello, Student!</h1>
+                <div class="profile">
+                    <div class="profile-info">
+                        <img src="https://i.pravatar.cc/150?img=12" alt="Profile Picture">
+                        <span>Alex Johnson</span><i class="fas fa-chevron-down" style="margin-left:10px; font-size:0.8em;"></i>
+                    </div>
+                    <div class="profile-dropdown">
+                        <a href="#"><i class="fas fa-user-circle"></i> Profile</a>
+                        <a href="/loginpage.html"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </div>
+            </header>
+            <section class="card-grid">
+                <div class="card"><div class="icon"><i class="fa-solid fa-right-to-bracket"></i></div><h3>Join a Classroom</h3><p>Enter a code from your teacher to join a new class and access quizzes.</p></div>
+                <div class="card"><div class="icon"><i class="fa-solid fa-list-check"></i></div><h3>Upcoming Quizzes</h3><p>You have <strong>2</strong> new quizzes available. Check them out now!</p></div>
+                <div class="card"><div class="icon"><i class="fa-solid fa-award"></i></div><h3>Recent Performance</h3><p>Your average score is <strong>85%</strong>. Keep up the great work!</p></div>
+            </section>
+        </main>
+    </div>
+    <script src="main.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - QuizMaster</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-card">
+            <h2>Create Your Account</h2>
+            <p>Join our community of learners and educators.</p>
+            <form action="/signup" method="POST">
+                <div class="input-group"><i class="fa fa-envelope"></i><input type="email" name="email" placeholder="Email / Institute ID" required></div>
+                <div class="input-group"><i class="fa fa-user"></i><input type="text" name="username" placeholder="Username" required></div>
+                <div class="input-group"><i class="fa fa-lock"></i><input type="password" name="password" placeholder="Create Password" required></div>
+                <button type="submit" class="btn">Sign Up</button>
+            </form>
+            <div class="switch-form"><p>Already have an account? <a href="/loginpage.html">Login</a></p></div>
+        </div>
+    </div>
+    <script src="main.js" defer></script>
+</body>
+</html>

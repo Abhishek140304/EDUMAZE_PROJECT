@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Quiz</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <main class="main-content" style="width: 100%;">
+            <header class="header"><h1>Create a New Quiz</h1></header>
+            <div class="create-quiz-container">
+                <form action="/create-quiz" method="POST">
+                    <div class="card">
+                        <div class="input-group"><i class="fas fa-file-alt"></i><input type="text" name="quiz_title" placeholder="Quiz Title" required></div>
+                    </div>
+                    <div id="questions-container">
+                        </div>
+                    <button type="button" id="add-question-btn" class="btn" style="background: var(--success-color); margin-bottom: 10px;"><i class="fas fa-plus"></i> Add Question</button>
+                    <button type="submit" class="btn">Save Quiz</button>
+                </form>
+            </div>
+        </main>
+    </div>
+    <script src="main.js" defer></script>
+</body>
+</html>

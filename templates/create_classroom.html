@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Classroom</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <main class="main-content" style="width: 100%;">
+            <header class="header"><h1>Create a New Classroom</h1></header>
+            <div class="form-container card">
+                <form action="/create-class" method="POST">
+                    <div class="input-group"><i class="fas fa-chalkboard"></i><input type="text" name="classname" placeholder="Classroom Name (e.g., Grade 10 Physics)" required></div>
+                    <div class="input-group"><i class="fas fa-book"></i><input type="text" name="subject" placeholder="Subject (e.g., Physics)" required></div>
+                    <button type="submit" class="btn">Generate Class Code</button>
+                </form>
+            </div>
+        </main>
+    </div>
+    <script src="main.js" defer></script>
+</body>
+</html>
