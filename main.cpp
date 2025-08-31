@@ -8,7 +8,8 @@ int main(){
         return page.render();
     });
     CROW_ROUTE(app, "/loginpage")([](){
-        return "Hello";
+        auto page=crow::mustache::load("login.html");
+        return page.render();
     });
     app.port(18080).multithreaded().run();
 }
