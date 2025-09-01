@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD        17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS      OFF)
 
-set(INCLUDE_PATHS C:/Users/lenovo/asio-1.36.0/asio-1.36.0/include C:/Crow/include)
+set(INCLUDE_PATHS C:/Users/DELL/asio-1.36.0/asio-1.36.0/include C:/Crow/include)
 
 add_executable(dsa_project main.cpp)
 

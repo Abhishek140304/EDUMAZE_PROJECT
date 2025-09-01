@@ -53,10 +53,10 @@ RM = "C:\Program Files\CMake\bin\cmake.exe" -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = D:\DSA_project\Edumaze_Project
+CMAKE_SOURCE_DIR = "C:\Users\DELL\Downloads\2nd year\EDUMAZE_PROJECT"
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = D:\DSA_project\Edumaze_Project\build
+CMAKE_BINARY_DIR = "C:\Users\DELL\Downloads\2nd year\EDUMAZE_PROJECT\build"
 
 #=============================================================================
 # Directory level rules for the build root directory
@@ -84,14 +84,14 @@ clean: CMakeFiles/dsa_project.dir/clean
 CMakeFiles/dsa_project.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\dsa_project.dir\build.make CMakeFiles/dsa_project.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\dsa_project.dir\build.make CMakeFiles/dsa_project.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=D:\DSA_project\Edumaze_Project\build\CMakeFiles --progress-num=1,2 "Built target dsa_project"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="C:\Users\DELL\Downloads\2nd year\EDUMAZE_PROJECT\build\CMakeFiles" --progress-num=1,2 "Built target dsa_project"
 .PHONY : CMakeFiles/dsa_project.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/dsa_project.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start D:\DSA_project\Edumaze_Project\build\CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start "C:\Users\DELL\Downloads\2nd year\EDUMAZE_PROJECT\build\CMakeFiles" 2
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 CMakeFiles/dsa_project.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start D:\DSA_project\Edumaze_Project\build\CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start "C:\Users\DELL\Downloads\2nd year\EDUMAZE_PROJECT\build\CMakeFiles" 0
 .PHONY : CMakeFiles/dsa_project.dir/rule
 
 # Convenience name for target.
@@ -101,7 +101,7 @@ dsa_project: CMakeFiles/dsa_project.dir/rule
 # codegen rule for target.
 CMakeFiles/dsa_project.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\dsa_project.dir\build.make CMakeFiles/dsa_project.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=D:\DSA_project\Edumaze_Project\build\CMakeFiles --progress-num=1,2 "Finished codegen for target dsa_project"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="C:\Users\DELL\Downloads\2nd year\EDUMAZE_PROJECT\build\CMakeFiles" --progress-num=1,2 "Finished codegen for target dsa_project"
 .PHONY : CMakeFiles/dsa_project.dir/codegen
 
 # clean rule for target.

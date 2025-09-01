@@ -1,3 +1,3 @@
-D:/DSA_project/Edumaze_Project/build/CMakeFiles/dsa_project.dir
-D:/DSA_project/Edumaze_Project/build/CMakeFiles/edit_cache.dir
-D:/DSA_project/Edumaze_Project/build/CMakeFiles/rebuild_cache.dir
+C:/Users/DELL/Downloads/2nd year/EDUMAZE_PROJECT/build/CMakeFiles/dsa_project.dir
+C:/Users/DELL/Downloads/2nd year/EDUMAZE_PROJECT/build/CMakeFiles/edit_cache.dir
+C:/Users/DELL/Downloads/2nd year/EDUMAZE_PROJECT/build/CMakeFiles/rebuild_cache.dir
