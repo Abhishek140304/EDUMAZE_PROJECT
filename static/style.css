@@ -73,6 +73,25 @@ body {
 }
 .input-group input:focus { outline: none; border-color: var(--primary-color); box-shadow: 0 0 0 3px rgba(110, 142, 251, 0.2); }
 
+.input-group select {
+    width: 100%;
+    padding: 12px 12px 12px 40px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-family: var(--font-family);
+    -webkit-appearance: none; /* Removes default chrome and safari style */
+    -moz-appearance: none; /* Removes default firefox style */
+    appearance: none;
+    background-color: white; /* Ensure it has a background */
+    cursor: pointer;
+}
+
+.input-group select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(110, 142, 251, 0.2);
+}
+
 .btn {
     width: 100%; padding: 15px; border: none; border-radius: 8px;
     background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));

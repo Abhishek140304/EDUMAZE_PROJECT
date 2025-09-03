@@ -1,0 +1,23 @@
+[
+  {
+    "name": "Abhimanyu",
+    "email": "abhimanyu_106124006@nitt.edu",
+    "password": "abhimanyu",
+    "username": "Abhimanyu_111",
+    "classroomIds": "abcd1234"
+  },
+  {
+    "name": "Yuvraj Meena",
+    "email": "yuvraj_106124142@nitt.edu",
+    "password": "yuvraj",
+    "username": "Yuvraj_111",
+    "classroomIds": "abcd1234"
+  },
+  {
+    "name": "Abhay",
+    "email": "abhay_106124002@nitt.edu",
+    "password": "abhay",
+    "username": "Abhay_111",
+    "classroomIds": "abcd1234"
+  }
+]

@@ -11,15 +11,61 @@
         <div class="auth-card">
             <h2>Create Your Account</h2>
             <p>Join our community of learners and educators.</p>
-            <form action="/signup" method="POST">
-                <div class="input-group"><i class="fa fa-envelope"></i><input type="email" name="email" placeholder="Email / Institute ID" required></div>
-                <div class="input-group"><i class="fa fa-user"></i><input type="text" name="username" placeholder="Username" required></div>
-                <div class="input-group"><i class="fa fa-lock"></i><input type="password" name="password" placeholder="Create Password" required></div>
+            <form action="/signup_post" method="POST">
+                <div class="input-group">
+                    <i class="fa fa-envelope"></i>
+                    <label for="email"></label>
+                    <input type="email" name="email" placeholder="Email" required>
+                </div>
+
+                <div class="input-group">
+                    <i class="fa fa-user"></i>
+                    <label for="username"></label>
+                    <input type="text" name="username" minlength="8" title="Must contain at least 8 characters" placeholder="Username" required>
+                </div>
+
+                <div class="input-group">
+                    <i class="fa fa-user"></i>
+                    <label for="fullname"></label>
+                    <input type="text" name="fullname" placeholder="Fullname" required>
+                </div>
+
+                <div class="input-group">
+                    <i class="fa fa-lock"></i>
+                    <label for="password"></label>
+                    <input type="password" name="password" minlength="8" maxlength="20" title="Must contain at least 8 characters" placeholder="Create Password" required>
+                </div>
+
+                <div class="input-group">
+                    <i class="fa fa-lock"></i>
+                    <label for="confirm_password"></label>
+                    <input type="password" name="confirm_password" placeholder="Confirm Password" required>
+                </div>
+
+                <div class="input-group">
+                    <i class="fa fa-users"></i>
+                    <label for="role"></label>
+                    <select name="role" required>
+                        <option value="" disabled selected>Select your role...</option>
+                        <option value="student">I'm a Student</option>
+                        <option value="teacher">I'm a Teacher</option>
+                    </select>
+                </div>
                 <button type="submit" class="btn">Sign Up</button>
             </form>
-            <div class="switch-form"><p>Already have an account? <a href="/loginpage.html">Login</a></p></div>
+            <div class="switch-form"><p>Already have an account? <a href="signToLoginpage">Login</a></p></div>
         </div>
     </div>
-    <script src="main.js" defer></script>
 </body>
+<script>
+    document.querySelector("form").addEventListener("submit", function (e) {
+    const password = document.getElementById("password").value;
+    const confirm = document.getElementById("confirm_password").value;
+
+    if (password !== confirm) {
+        e.preventDefault(); // stop form submission
+        alert("Passwords do not match!");
+    }
+    });
+</script>
 </html>
