@@ -1,23 +1,23 @@
 [
-  {
-    "name": "Abhishek",
-    "email": "abhishek_106124004@nitt.edu",
-    "password": "abhishek",
-    "username": "Abhishek_111",
-    "classroomIds": "abcd1234"
-  },
-  {
-    "name": "Ankit Kumar",
-    "email": "ankit_106124018@nitt.edu",
-    "password": "ankit",
-    "username": "Ankit_111",
-    "classroomIds": "abcd1234"
-  },
-  {
-    "name": "Priya",
-    "email": "priya_106124090@nitt.edu",
-    "password": "priya",
-    "username": "Priyadharshini_111",
-    "classroomIds": "abcd1234"
-  }
+    {
+        "classroomIds": [],
+        "email": "priya_106124090@nitt.edu",
+        "name": "Priya",
+        "password": "priya",
+        "username": "Priyadharshini_111"
+    },
+    {
+        "classroomIds": [],
+        "email": "ankit_106124018@nitt.edu",
+        "name": "Ankit Kumar",
+        "password": "ankit",
+        "username": "Ankit_111"
+    },
+    {
+        "classroomIds": [],
+        "email": "abhishek_106124004@nitt.edu",
+        "name": "Abhishek",
+        "password": "abhishek",
+        "username": "Abhishek_111"
+    }
 ]

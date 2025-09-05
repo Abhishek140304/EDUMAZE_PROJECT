@@ -33,8 +33,11 @@ int main(){
                 student_data* data=table.findStudent(*user);
                 if(data){
                     if(data->password==pass){
+                        crow::mustache::context ctx;
+                        ctx["student_name"] = data->username;
+
                         auto page=crow::mustache::load("student_dashboard.html");
-                        return crow::response(page.render());
+                        return crow::response(page.render(ctx));
                     }
                 }
                 return crow::response("NO SUCH USER");
@@ -43,8 +46,10 @@ int main(){
                 teacher_data* data=table.findteacher(*user);
                 if(data){
                     if(data->password==pass){
+                        crow::mustache::context ctx;
+                        ctx["teacher_name"]=data->username;
                         auto page=crow::mustache::load("teacher_dashboard.html");
-                        return crow::response(page.render());
+                        return crow::response(page.render(ctx));
                     }
                 }
                 return crow::response("NO SUCH USER");

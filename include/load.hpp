@@ -51,6 +51,26 @@ struct email_link{
     email_link* next=NULL;
 };
 
+void to_json(json &j, const student_data &s){
+    j=json{
+        {"name", s.name},
+        {"email", s.email},
+        {"password", s.password},
+        {"username", s.username},
+        {"classroomIds", s.classroomIds}
+    };
+}
+
+void to_json(json &j, const teacher_data &s){
+    j=json{
+        {"name", s.name},
+        {"email", s.email},
+        {"password", s.password},
+        {"username", s.username},
+        {"classroomIds", s.classroomIds}
+    };
+}
+
 class hashTables{
     student_link** students;
     teacher_link** teachers;
@@ -68,11 +88,7 @@ class hashTables{
         return hash;
     }
 
-    void student_hashtable(int& size){
-        std::ifstream file("Data/students.json");
-        if (!file.is_open()) {
-            throw std::runtime_error("Could not open students.json");
-        }
+    void makeStudent_hashtable(int& size, std::ifstream &file){
         json data;
         
         file>>data;
@@ -105,11 +121,7 @@ class hashTables{
         }
     }
 
-    void teacher_hashtable(int& size){
-        std::ifstream file("Data/teachers.json");
-        if (!file.is_open()) {
-            throw std::runtime_error("Could not open teachers.json");
-        }
+    void makeTeacher_hashtable(int& size, std::ifstream &file){
         json data;
         
         file>>data;
@@ -155,8 +167,19 @@ public:
             students[i] = nullptr;
             teachers[i] = nullptr;
         }
-        student_hashtable(size);
-        teacher_hashtable(size);
+
+        std::ifstream studentFile("Data/students.json");
+        if(!studentFile.is_open()){
+            throw std::runtime_error("Could not open students.json");
+        }
+
+        std::ifstream teacherFile("Data/teachers.json");
+        if(!teacherFile.is_open()){
+            throw std::runtime_error("Could not open teachers.json");
+        }
+
+        makeStudent_hashtable(size, studentFile);
+        makeTeacher_hashtable(size, teacherFile);
     }
 
     student_data* findStudent(std::string& s){
@@ -244,6 +267,34 @@ public:
     }
 
     ~hashTables(){
+
+        std::cout<<"Saving user data to files..."<<std::endl;
+
+        //saving
+        json students_json_array=json::array();
+        for(int i=0; i<size; ++i){
+            student_link* curr=students[i];
+            while(curr!=nullptr){
+                students_json_array.push_back(*(curr->data));
+                curr=curr->next;
+            }
+        }
+        std::ofstream studentFile("Data/students.json");
+        studentFile<<students_json_array.dump(4);
+        studentFile.close();
+
+        json teachers_json_array=json::array();
+        for(int i=0; i<size; ++i){
+            teacher_link* curr=teachers[i];
+            while(curr!=nullptr){
+                teachers_json_array.push_back(*(curr->data));
+                curr=curr->next;
+            }
+        }
+        std::ofstream teacherFile("Data/teachers.json");
+        teacherFile<<teachers_json_array.dump(4);
+        teacherFile.close();
+
         for(int i=0;i<size;i++){
             student_link* curr1=students[i];
             while(curr1){
