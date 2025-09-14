@@ -4,24 +4,132 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Quiz</title>
-    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Add specific styles for the quiz creation form */
+        .question-card {
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        .question-card h4 {
+            margin-top: 0;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        .option-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .option-group input[type="radio"] {
+            margin-right: 10px;
+            flex-shrink: 0;
+        }
+        .option-group input[type="text"] {
+            width: 100%;
+        }
+        .remove-question-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
     <div class="dashboard-container">
         <main class="main-content" style="width: 100%;">
             <header class="header"><h1>Create a New Quiz</h1></header>
             <div class="create-quiz-container">
-                <form action="/create-quiz" method="POST">
+                <form action="/create-quiz" method="POST" id="quiz-form">
                     <div class="card">
-                        <div class="input-group"><i class="fas fa-file-alt"></i><input type="text" name="quiz_title" placeholder="Quiz Title" required></div>
-                    </div>
-                    <div id="questions-container">
+                        <div class="input-group">
+                            <i class="fas fa-file-alt"></i>
+                            <input type="text" name="quiz_title" placeholder="Quiz Title" required>
                         </div>
-                    <button type="button" id="add-question-btn" class="btn" style="background: var(--success-color); margin-bottom: 10px;"><i class="fas fa-plus"></i> Add Question</button>
+
+                        <div class="input-group">
+                            <label for="classroom_id">Select Classroom</label>
+                            <select name="classroom_id" id="classroom_id" required>
+                                {{#classrooms}}
+                                <option value="{{id}}">{{name}} ({{subject}})</option>
+                                {{/classrooms}}
+                                {{^classrooms}}
+                                <option value="">-- No classrooms available --</option>
+                                {{/classrooms}}
+                            </select>
+                        </div>
+
+                    </div>
+
+                    <div id="questions-container"></div>
+
+                    <button type="button" id="add-question-btn" class="btn" style="background: var(--success-color); margin-bottom: 10px;">
+                        <i class="fas fa-plus"></i> Add Question
+                    </button>
                     <button type="submit" class="btn">Save Quiz</button>
                 </form>
             </div>
         </main>
     </div>
+
+    <script>
+        // --- JavaScript for Dynamic Form Generation ---
+        document.addEventListener('DOMContentLoaded', function () {
+            const addQuestionBtn = document.getElementById('add-question-btn');
+            const questionsContainer = document.getElementById('questions-container');
+            let questionCounter = 0;
+
+            addQuestionBtn.addEventListener('click', function () {
+                const questionIndex = questionCounter++;
+                const questionCard = document.createElement('div');
+                questionCard.className = 'question-card card';
+
+                questionCard.innerHTML = `
+                    <h4>Question ${questionIndex + 1}</h4>
+                    <button type="button" class="remove-question-btn" data-question-index="${questionIndex}">&times;</button>
+                    
+                    <div class="input-group">
+                        <input type="text" name="question_text_${questionIndex}" placeholder="Enter question text" required>
+                    </div>
+
+                    ${createOptionInput(questionIndex, 0, "Option A")}
+                    ${createOptionInput(questionIndex, 1, "Option B")}
+                    ${createOptionInput(questionIndex, 2, "Option C")}
+                    ${createOptionInput(questionIndex, 3, "Option D")}
+                `;
+                
+                questionsContainer.appendChild(questionCard);
+
+                // Add event listener for the new remove button
+                questionCard.querySelector('.remove-question-btn').addEventListener('click', function() {
+                    questionsContainer.removeChild(questionCard);
+                    // Note: Renumbering indices on removal is complex and often unnecessary if backend processes sequentially.
+                });
+            });
+
+            function createOptionInput(qIndex, optionIndex, placeholder) {
+                const radioName = `correct_answer_${qIndex}`;
+                return `
+                    <div class="option-group">
+                        <input type="radio" name="${radioName}" value="${optionIndex}" ${optionIndex === 0 ? 'checked' : ''} required title="Mark as correct answer">
+                        <input type="text" name="option_${qIndex}_${optionIndex}" placeholder="${placeholder}" required>
+                    </div>
+                `;
+            }
+        });
+    </script>
 </body>
 </html>

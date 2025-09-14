@@ -1,5 +1,6 @@
-#ifndef student_data_HPP
-#define student_data_HPP
+#ifndef USERS_HPP
+#define USERS_HPP
+
 #include<iostream>
 #include<string>
 #include<vector>
@@ -327,4 +328,6 @@ public:
         delete[] emails;
     }
 };
+
+
 #endif

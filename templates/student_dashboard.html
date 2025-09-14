@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Dashboard</title>
-    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/dashboard.css">
 </head>
 <body>
     <div class="dashboard-container">
@@ -19,10 +19,10 @@
         </nav>
         <main class="main-content">
             <header class="header">
-                <h1>Hello, Student!</h1>
+                <h1>Hello, {{ student_name }}!</h1>
                 <div class="profile">
                     <div class="profile-info">
-                        <span>{{ student_name }}</span><i class="fas fa-chevron-down" style="margin-left:10px; font-size:0.8em;"></i>
+                        <span>{{ student_username }}</span><i class="fas fa-chevron-down" style="margin-left:10px; font-size:0.8em;"></i>
                     </div>
                     <div class="profile-dropdown">
                         <a href="#"><i class="fas fa-user-circle"></i> Profile</a>

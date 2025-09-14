@@ -1,0 +1,48 @@
+/* ===== Google Fonts & Global Styles ===== */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css');
+
+:root {
+    --primary-color: #6e8efb;
+    --secondary-color: #a777e3;
+    --font-family: 'Poppins', sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: var(--font-family);
+    line-height: 1.6;
+}
+
+/* ===== Welcome Page Styles ===== */
+.welcome-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    min-height: 100vh;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    animation: fadeIn 1s ease-in-out;
+}
+
+.welcome-content {
+    text-align: center;
+    color: white;
+    transform: translateY(-20px);
+    animation: slideUp 0.8s ease-out forwards;
+}
+
+.welcome-content h1 { font-size: 4rem; font-weight: 700; margin-bottom: 1rem; letter-spacing: 2px; }
+.welcome-content p { font-size: 1.2rem; margin-bottom: 2rem; }
+
+.btn-main {
+    padding: 15px 30px; background: white; color: var(--primary-color);
+    border: none; border-radius: 50px; font-size: 1.1rem; font-weight: 600;
+    text-decoration: none; cursor: pointer; transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.btn-main:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); }
+
+/* Animations */
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }

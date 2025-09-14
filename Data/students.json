@@ -1,21 +1,28 @@
 [
     {
         "classroomIds": [],
-        "email": "priya_106124090@nitt.edu",
+        "email": "106124090@nitt.edu",
         "name": "Priya",
         "password": "priya",
         "username": "Priyadharshini_111"
     },
     {
         "classroomIds": [],
-        "email": "ankit_106124018@nitt.edu",
+        "email": "106124104@nitt.edu",
+        "name": "rupali kumari",
+        "password": "rupeshasdf",
+        "username": "rupali000"
+    },
+    {
+        "classroomIds": [],
+        "email": "106124018@nitt.edu",
         "name": "Ankit Kumar",
         "password": "ankit",
         "username": "Ankit_111"
     },
     {
         "classroomIds": [],
-        "email": "abhishek_106124004@nitt.edu",
+        "email": "106124004@nitt.edu",
         "name": "Abhishek",
         "password": "abhishek",
         "username": "Abhishek_111"
