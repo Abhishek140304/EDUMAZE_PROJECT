@@ -34,7 +34,8 @@ int main(){
                 if(data){
                     if(data->password==pass){
                         crow::mustache::context ctx;
-                        ctx["student_name"] = data->username;
+                        ctx["student_name"] = data->name;
+                        ctx["student_username"] = data->username;
 
                         auto page=crow::mustache::load("student_dashboard.html");
                         return crow::response(page.render(ctx));
@@ -47,7 +48,8 @@ int main(){
                 if(data){
                     if(data->password==pass){
                         crow::mustache::context ctx;
-                        ctx["teacher_name"]=data->username;
+                        ctx["teacher_name"]=data->name;
+                        ctx["teacher_username"]=data->username;
                         auto page=crow::mustache::load("teacher_dashboard.html");
                         return crow::response(page.render(ctx));
                     }
