@@ -193,7 +193,7 @@ public:
         return nullptr;
     }
 
-    teacher_data* findteacher(std::string& s){
+    teacher_data* findTeacher(std::string& s){
         uint32_t index=fnv1a(s)%size;
         teacher_link* node=teachers[index];
         while(node){

@@ -1,0 +1,74 @@
+/* General body styling */
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background-color: #f4f7f6;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+}
+
+/* Main container for the error content */
+.error-container {
+    max-width: 600px;
+    padding: 40px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Styling for the error code (e.g., 404) */
+.error-code {
+    font-size: 6rem;
+    font-weight: 600;
+    color: #e74c3c; /* A shade of red for error */
+    margin-bottom: 10px;
+}
+
+/* Styling for the main heading */
+.error-heading {
+    font-size: 2rem;
+    color: #2c3e50; /* Dark blue-gray */
+    margin-bottom: 15px;
+}
+
+/* Styling for the descriptive message */
+.error-message {
+    font-size: 1.1rem;
+    color: #7f8c8d; /* Gray for secondary text */
+    margin-bottom: 30px;
+}
+
+/* Styling for the "Go to Homepage" button */
+.home-button {
+    display: inline-block;
+    padding: 12px 25px;
+    background-color: #3498db; /* A nice blue */
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+/* Hover effect for the button */
+.home-button:hover {
+    background-color: #2980b9; /* Darker blue on hover */
+    transform: translateY(-2px); /* Slight lift effect */
+}
+
+/* A simple fade-in animation for the container */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
