@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Classroom Created!</title>
+    <link rel="stylesheet" href="/static/dashboard.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <main class="main-content" style="width: 100%; text-align: center;">
+            <header class="header">
+                <h1>Success! ✅</h1>
+            </header>
+            <div class="form-container card">
+                <h2>Your new classroom has been created.</h2>
+                <p>Share this code with your students to let them join:</p>
+                <div class="class-code-display" style="background-color: #e9ecef; padding: 20px; font-size: 2.5em; font-family: monospace; letter-spacing: 5px; margin: 20px 0; border-radius: 8px; color: #495057;">
+                    <strong>{{ class_code }}</strong>
+                </div>
+                <a href="/teacher_dashboard" class="btn">Back to Dashboard</a>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

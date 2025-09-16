@@ -72,7 +72,7 @@ void to_json(json &j, const teacher_data &s){
     };
 }
 
-class hashTables{
+class user_hashTable{
     student_link** students;
     teacher_link** teachers;
     email_link** emails;
@@ -156,7 +156,7 @@ class hashTables{
     }
 
 public:
-    hashTables(){
+    user_hashTable(){
         size=100;
         emails=new email_link*[size*2];
         students=new student_link*[size];
@@ -267,7 +267,7 @@ public:
         return nullptr;
     }
 
-    ~hashTables(){
+    ~user_hashTable(){
 
         std::cout<<"Saving user data to files..."<<std::endl;
 

@@ -13,7 +13,7 @@
                 <h1>Create a New Classroom</h1>
             </header>
             <div class="form-container card">
-                <form action="/create_classroom" method="POST">
+                <form action="/create_classroom_post" method="POST">
                     <div class="input-group">
                         <i class="fas fa-chalkboard"></i>
                         <input type="text" name="classname" placeholder="Classroom Name (e.g., Grade 10 Physics)" required>
@@ -22,9 +22,9 @@
                         <i class="fas fa-book"></i>
                         <input type="text" name="subject" placeholder="Subject (e.g., Physics)" required>
                     </div>
-                    <input type="hidden" name="username" value="{{ teacher_username }}">
                     <button type="submit" class="btn">Generate Class Code</button>
                 </form>
+                <a href="/teacher_dashboard" class="btn" style="text-align: center; background-color: #6c757d; margin-top: 15px;">Back to Dashboard</a>
             </div>
         </main>
     </div>

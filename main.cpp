@@ -4,6 +4,7 @@
 #include <iostream>
 #include <filesystem>
 #include "include/users.hpp"
+#include "include/classroom.hpp"
 #include <vector>
 #include <string>
 #include <any> 
@@ -12,7 +13,8 @@ using Session=crow::SessionMiddleware<crow::InMemoryStore>;
 
 int main(){
     try{
-    hashTables table;
+    user_hashTable user_table;
+    classroom_hashTable classroom_table;
 
     crow::mustache::set_base("templates");
 
@@ -44,7 +46,7 @@ int main(){
         return page.render();
     });
 
-    CROW_ROUTE(app, "/student_dashboard")([&app,&table](const crow::request& req)->crow::response {
+    CROW_ROUTE(app, "/student_dashboard")([&app,&user_table](const crow::request& req)->crow::response {
         auto& session=app.get_context<Session>(req);
         std::string user_type=session.get<std::string>("user_type");
 
@@ -55,7 +57,7 @@ int main(){
         }
 
         std::string username=session.get<std::string>("username");
-        student_data* data=table.findStudent(username);
+        student_data* data=user_table.findStudent(username);
         crow::mustache::context ctx;
         ctx["student_name"] = data->name;
         ctx["student_username"] = data->username;
@@ -65,7 +67,7 @@ int main(){
 
     });
 
-    CROW_ROUTE(app, "/teacher_dashboard")([&app,&table](const crow::request& req)->crow::response {
+    CROW_ROUTE(app, "/teacher_dashboard")([&app,&user_table](const crow::request& req)->crow::response {
         auto& session=app.get_context<Session>(req);
         std::string user_type=session.get<std::string>("user_type");
 
@@ -76,7 +78,7 @@ int main(){
         }
 
         std::string username=session.get<std::string>("username");
-        teacher_data* data=table.findTeacher(username);
+        teacher_data* data=user_table.findTeacher(username);
         crow::mustache::context ctx;
         ctx["teacher_name"] = data->name;
         ctx["teacher_username"] = data->username;
@@ -91,14 +93,14 @@ int main(){
         return page.render();
     });
 
-    CROW_ROUTE(app, "/login_post").methods("POST"_method)([&app,&table](const crow::request& req) -> crow::response {
+    CROW_ROUTE(app, "/login_post").methods("POST"_method)([&app,&user_table](const crow::request& req) -> crow::response {
         auto req_body = crow::query_string(("?" + req.body).c_str());
 
         crow::response res;
         std::string email=req_body.get("email");
         std::string pass=req_body.get("password");
         std::string role=req_body.get("role");
-        std::string* user=table.findUsername(email);
+        std::string* user=user_table.findUsername(email);
 
         if(!user){
             res.code = 303;
@@ -111,14 +113,14 @@ int main(){
         std::string destination;
         if(user){
             if(role=="student"){
-                student_data* data=table.findStudent(*user);
+                student_data* data=user_table.findStudent(*user);
                 if(data && data->password==pass){
                     login_success=true;
                     destination="/student_dashboard";
                 }
             }
             else if(role=="teacher"){
-                teacher_data* data=table.findTeacher(*user);
+                teacher_data* data=user_table.findTeacher(*user);
                 if(data && data->password==pass){
                     login_success=true;
                     destination="/teacher_dashboard";
@@ -146,7 +148,7 @@ int main(){
         return page.render();
     });
 
-    CROW_ROUTE(app, "/signup_post").methods("POST"_method)([&app,&table](const crow::request& req) -> crow::response {
+    CROW_ROUTE(app, "/signup_post").methods("POST"_method)([&app,&user_table](const crow::request& req) -> crow::response {
         auto req_body = crow::query_string(("?" + req.body).c_str());
 
         crow::response res;
@@ -163,12 +165,12 @@ int main(){
 
         if(role=="student"){
             student_data* new_user=new student_data(name,username,email,pass);
-            table.addStudent(new_user);
+            user_table.addStudent(new_user);
             res.add_header("Location","/student_dashboard");
         }
         else{
             teacher_data* new_user=new teacher_data(name,username,email,pass);
-            table.addTeacher(new_user);
+            user_table.addTeacher(new_user);
             res.add_header("Location","/teacher_dashboard");
         }
         return res;
@@ -201,9 +203,60 @@ int main(){
             return res;
         }
 
-        auto page=crow::mustache::load("create_classroom.html");
-        return crow::response(page.render());
+        crow::mustache::context ctx;
+        ctx["teacher_username"]=session.get<std::string>("username");
 
+        auto page=crow::mustache::load("create_classroom.html");
+        return crow::response(page.render(ctx));
+
+    });
+
+    CROW_ROUTE(app,"/create_classroom_post").methods("POST"_method)([&app,&user_table, &classroom_table](const crow::request& req) -> crow::response {
+        auto req_body = crow::query_string(("?" + req.body).c_str());
+
+        auto& session=app.get_context<Session>(req);
+
+        std::string user_type=session.get<std::string>("user_type");
+        std::string username=session.get<std::string>("username");
+
+        if(user_type!="teacher" || username.empty()){
+            crow::response res(303);
+            res.add_header("Location", "/error");
+            return res;
+        }
+
+        std::string classname=req_body.get("classname");
+        std::string subject=req_body.get("subject");
+
+        teacher_data* teacher=user_table.findTeacher(username);
+        if(!teacher){
+            crow::response res(303);
+            res.add_header("Location", "/error");
+            return res;
+        }
+
+        std::string new_class_code=classroom_table.addClassroom(classname,subject,teacher);
+
+        crow::response res(303);
+        res.add_header("Location","/classroom_created?code="+new_class_code);
+        return res;
+
+    });
+
+    CROW_ROUTE(app,"/classroom_created")([](const crow::request& req){
+        const char* code = req.url_params.get("code");
+
+        if (!code || std::string(code).empty()) {
+            crow::response res(303);
+            res.add_header("Location", "/error");
+            return res;
+        }
+
+        crow::mustache::context ctx;
+        ctx["class_code"]=req.url_params.get("code");
+        
+        auto page=crow::mustache::load("classroom_created.html");
+        return crow::response(page.render(ctx));
     });
 
     CROW_ROUTE(app, "/create_quiz")([&app](const crow::request& req)->crow::response {

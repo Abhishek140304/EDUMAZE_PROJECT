@@ -7,7 +7,9 @@
         "username": "Abhay_111"
     },
     {
-        "classroomIds": [],
+        "classroomIds": [
+            "SY8124"
+        ],
         "email": "106124142@nitt.edu",
         "name": "Yuvraj Meena",
         "password": "yuvraj",
