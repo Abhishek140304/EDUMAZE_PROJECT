@@ -18,9 +18,10 @@ struct classroom_data {
     std::string class_code;
     std::string teacher_username;
     std::vector<std::string> student_usernames;
+    std::vector<std::string> quizIds;
 
-    classroom_data(const std::string& theclass_name, const std::string& thesubject, const std::string& theclass_code, const std::string& theteacher_username)
-        : class_name(theclass_name), subject(thesubject), class_code(theclass_code), teacher_username(theteacher_username) {}
+    classroom_data(const std::string& theclass_name, const std::string& thesubject, const std::string& theclass_code, const std::string& theteacher_username, const std::vector<std::string>& thequizIds)
+        : class_name(theclass_name), subject(thesubject), class_code(theclass_code), teacher_username(theteacher_username), quizIds(thequizIds) {}
 };
 
 struct classroom_link {
@@ -34,7 +35,8 @@ void to_json(json& j, const classroom_data& c) {
         {"subject", c.subject},
         {"class_code", c.class_code},
         {"teacher_username", c.teacher_username},
-        {"student_usernames", c.student_usernames}
+        {"student_usernames", c.student_usernames},
+        {"quizIds", c.quizIds}
     };
 }
 
@@ -72,11 +74,16 @@ private:
 
         file>>data;
         for (const auto& room : data) {
-            uint32_t index = fnv1a(room["class_code"]) % table_size;
-            classroom_data* new_room = new classroom_data(
-                room["class_name"], room["subject"], room["class_code"], room["teacher_username"]
-            );
-            new_room->student_usernames = room["student_usernames"].get<std::vector<std::string>>();
+            std::string class_name = room.value("class_name", "");
+            std::string subject = room.value("subject", "");
+            std::string class_code = room.value("class_code", "");
+            std::string teacher_username = room.value("teacher_username", "");
+            std::vector<std::string> quizIds = room.value("quizIds", std::vector<std::string>{});
+            std::vector<std::string> student_usernames = room.value("student_usernames", std::vector<std::string>{});
+
+            uint32_t index = fnv1a(class_code) % table_size;
+            classroom_data* new_room = new classroom_data(class_name, subject, class_code, teacher_username, quizIds);
+            new_room->student_usernames = student_usernames;
 
             classroom_link* newnode = new classroom_link;
             newnode->data=new_room;
@@ -113,7 +120,7 @@ public:
         std::string code = generate_class_code();
         uint32_t index = fnv1a(code) % size;
 
-        classroom_data* new_room_data = new classroom_data(name, subject, code, teacher->username);
+        classroom_data* new_room_data = new classroom_data(name, subject, code, teacher->username,{});
         classroom_link* newnode = new classroom_link;
         newnode->data=new_room_data;
 

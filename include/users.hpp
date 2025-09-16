@@ -34,11 +34,12 @@ struct teacher_data {
     std::string password;
     std::vector<std::string> classroomIds;
     
-    teacher_data(const std:: string& thename,const std::string& theusername,const std::string& theemail,const std::string& thepassword):
+    teacher_data(const std:: string& thename,const std::string& theusername,const std::string& theemail,const std::string& thepassword, const std::vector<std::string>& theclassroomIds={}):
     name(thename),
     username(theusername),
     email(theemail), 
-    password(thepassword)
+    password(thepassword),
+    classroomIds(theclassroomIds)
     {}
 };
 struct teacher_link{
@@ -128,7 +129,12 @@ class user_hashTable{
         file>>data;
         for(const auto& user:data){
             uint32_t index=fnv1a(user["username"])%size;
-            teacher_data* new_user=new teacher_data(user["name"], user["username"],user["email"],user["password"]);
+
+            std::vector<std::string> classrooms;
+            if(user.contains("classroomIds") && user["classroomIds"].is_array()){
+                classrooms = user["classroomIds"].get<std::vector<std::string>>();
+            }
+            teacher_data* new_user=new teacher_data(user["name"], user["username"],user["email"],user["password"], classrooms);
             teacher_link* newnode=new teacher_link;
             newnode->data=new_user;
             if(teachers[index]){
@@ -228,6 +234,7 @@ public:
         else{
             emails[index]=email_node;
         }
+        saveStudentsToFile();
     }
 
     void addTeacher(teacher_data* new_user){
@@ -255,6 +262,7 @@ public:
         else{
             emails[index]=email_node;
         }
+        saveTeachersToFile();
     }
 
     std::string* findUsername(std::string& theEmail){
@@ -266,6 +274,18 @@ public:
         }
         return nullptr;
     }
+
+    void saveStudentsToFile(){
+        json j = json::array();
+        for(int i=0;i<size;i++){ student_link* curr=students[i]; while(curr){ j.push_back(*(curr->data)); curr=curr->next; } }
+        std::ofstream("Data/students.json") << j.dump(4);
+    }
+    void saveTeachersToFile(){
+        json j = json::array();
+        for(int i=0;i<size;i++){ teacher_link* curr=teachers[i]; while(curr){ j.push_back(*(curr->data)); curr=curr->next; } }
+        std::ofstream("Data/teachers.json") << j.dump(4);
+    }
+
 
     ~user_hashTable(){
 

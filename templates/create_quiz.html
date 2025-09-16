@@ -53,7 +53,7 @@
         <main class="main-content" style="width: 100%;">
             <header class="header"><h1>Create a New Quiz</h1></header>
             <div class="create-quiz-container">
-                <form action="/create-quiz" method="POST" id="quiz-form">
+                <form action="/create_quiz_post" method="POST" id="quiz-form">
                     <div class="card">
                         <div class="input-group">
                             <i class="fas fa-file-alt"></i>
@@ -61,13 +61,18 @@
                         </div>
 
                         <div class="input-group">
+                            <i class="fas fa-clock"></i>
+                            <input type="number" name="time_limit" placeholder="Time Limit (in minutes)" required min="1">
+                        </div>
+
+                        <div class="input-group">
                             <label for="classroom_id">Select Classroom</label>
                             <select name="classroom_id" id="classroom_id" required>
                                 {{#classrooms}}
-                                <option value="{{id}}">{{name}} ({{subject}})</option>
+                                <option value="{{class_code}}">{{class_name}} ({{subject}})</option>
                                 {{/classrooms}}
                                 {{^classrooms}}
-                                <option value="">-- No classrooms available --</option>
+                                <option value="" disabled>-- Create a classroom first! --</option>
                                 {{/classrooms}}
                             </select>
                         </div>

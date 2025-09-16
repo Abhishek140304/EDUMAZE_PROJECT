@@ -1,0 +1,20 @@
+[
+    {
+        "classroomId": "1J6WJY",
+        "questions": [
+            {
+                "correctAnswerIndex": 1,
+                "options": [
+                    "fine",
+                    "good",
+                    "ok",
+                    "don't know"
+                ],
+                "questionText": "How are you?"
+            }
+        ],
+        "quizId": "IAX8MY",
+        "quizTitle": "Basic question",
+        "timeLimitMinutes": 1
+    }
+]
