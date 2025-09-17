@@ -6,7 +6,7 @@
 #include<vector>
 #include "json.hpp"
 #include <fstream> 
-using json = nlohmann::json;
+using njson = nlohmann::json;
 
 struct student_data {
     std::string name;
@@ -53,25 +53,9 @@ struct email_link{
     email_link* next=NULL;
 };
 
-void to_json(json &j, const student_data &s){
-    j=json{
-        {"name", s.name},
-        {"email", s.email},
-        {"password", s.password},
-        {"username", s.username},
-        {"classroomIds", s.classroomIds}
-    };
-}
+void to_json(njson &j, const student_data &s);
 
-void to_json(json &j, const teacher_data &s){
-    j=json{
-        {"name", s.name},
-        {"email", s.email},
-        {"password", s.password},
-        {"username", s.username},
-        {"classroomIds", s.classroomIds}
-    };
-}
+void to_json(njson &j, const teacher_data &s);
 
 class user_hashTable{
     student_link** students;
@@ -91,7 +75,7 @@ class user_hashTable{
     }
 
     void makeStudent_hashtable(int& size, std::ifstream &file){
-        json data;
+        njson data;
         
         file>>data;
         for(const auto& user:data){
@@ -124,7 +108,7 @@ class user_hashTable{
     }
 
     void makeTeacher_hashtable(int& size, std::ifstream &file){
-        json data;
+        njson data;
         
         file>>data;
         for(const auto& user:data){
@@ -276,12 +260,12 @@ public:
     }
 
     void saveStudentsToFile(){
-        json j = json::array();
+        njson j = njson::array();
         for(int i=0;i<size;i++){ student_link* curr=students[i]; while(curr){ j.push_back(*(curr->data)); curr=curr->next; } }
         std::ofstream("Data/students.json") << j.dump(4);
     }
     void saveTeachersToFile(){
-        json j = json::array();
+        njson j = njson::array();
         for(int i=0;i<size;i++){ teacher_link* curr=teachers[i]; while(curr){ j.push_back(*(curr->data)); curr=curr->next; } }
         std::ofstream("Data/teachers.json") << j.dump(4);
     }
@@ -292,7 +276,7 @@ public:
         std::cout<<"Saving user data to files..."<<std::endl;
 
         //saving
-        json students_json_array=json::array();
+        njson students_json_array=njson::array();
         for(int i=0; i<size; ++i){
             student_link* curr=students[i];
             while(curr!=nullptr){
@@ -304,7 +288,7 @@ public:
         studentFile<<students_json_array.dump(4);
         studentFile.close();
 
-        json teachers_json_array=json::array();
+        njson teachers_json_array=njson::array();
         for(int i=0; i<size; ++i){
             teacher_link* curr=teachers[i];
             while(curr!=nullptr){

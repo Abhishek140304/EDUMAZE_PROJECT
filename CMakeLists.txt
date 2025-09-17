@@ -8,9 +8,18 @@ set(CMAKE_CXX_EXTENSIONS      OFF)
 
 set(INCLUDE_PATHS C:/Users/lenovo/asio-1.36.0/asio-1.36.0/include C:/Crow/include)
 
-add_executable(dsa_project main.cpp)
+add_executable(dsa_project
+    main.cpp
+    source/Classroom.cpp
+    source/Quiz.cpp
+    source/Students.cpp
+    source/Teachers.cpp
+)
 
-target_include_directories(dsa_project PUBLIC ${INCLUDE_PATHS})
+target_include_directories(dsa_project PUBLIC 
+    ${INCLUDE_PATHS}
+    ${CMAKE_SOURCE_DIR}/include
+)
 
 
 # On some toolchains you must link the filesystem library manually

@@ -6,55 +6,5 @@
         "student_usernames": [],
         "subject": "DSA",
         "teacher_username": "Yuvraj_111"
-    },
-    {
-        "class_code": "QMAH71",
-        "class_name": "CSE B",
-        "quizIds": [],
-        "student_usernames": [],
-        "subject": "DSA",
-        "teacher_username": "Yuvraj_111"
-    },
-    {
-        "class_code": "Z5YQK8",
-        "class_name": "CSE B",
-        "quizIds": [],
-        "student_usernames": [],
-        "subject": "DSA",
-        "teacher_username": "Yuvraj_111"
-    },
-    {
-        "class_code": "SXF1KY",
-        "class_name": "CSE B",
-        "quizIds": [],
-        "student_usernames": [],
-        "subject": "DSA",
-        "teacher_username": "Yuvraj_111"
-    },
-    {
-        "class_code": "KE48N7",
-        "class_name": "CSE B",
-        "quizIds": [],
-        "student_usernames": [],
-        "subject": "DSA",
-        "teacher_username": "Yuvraj_111"
-    },
-    {
-        "class_code": "7MXJYV",
-        "class_name": "CSE B",
-        "quizIds": [],
-        "student_usernames": [],
-        "subject": "DSA",
-        "teacher_username": "Yuvraj_111"
-    },
-    {
-        "class_code": "1J6WJY",
-        "class_name": "CSE B",
-        "quizIds": [
-            "IAX8MY"
-        ],
-        "student_usernames": [],
-        "subject": "DSA",
-        "teacher_username": "Yuvraj_111"
     }
 ]

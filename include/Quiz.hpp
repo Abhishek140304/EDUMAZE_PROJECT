@@ -1,6 +1,9 @@
 #ifndef QUIZ_HPP
 #define QUIZ_HPP
 
+#include "crow.h"
+#include "crow/middlewares/cookie_parser.h"
+#include "crow/middlewares/session.h"
 #include <iostream>
 #include <string>
 #include <vector>
@@ -36,38 +39,13 @@ struct quiz_link{
     quiz_link* next=nullptr;
 };
 
-void to_json(njson& j, const Question& q) {
-    j=njson{
-        {"questionText", q.questionText},
-        {"options", q.options},
-        {"correctAnswerIndex", q.correctAnswerIndex}
-    };
-}
+void to_json(njson& j, const Question& q);
 
-void from_json(const njson& j, Question& q) {
-    q.questionText = j.value("questionText", "");
-    q.options = j.value("options", std::vector<std::string>{});
-    q.correctAnswerIndex = j.value("correctAnswerIndex", 0);
-}
+void from_json(const njson& j, Question& q);
 
+void to_json(njson& j, const quiz_data& q);
 
-void to_json(njson& j, const quiz_data& q) {
-    j=njson{
-        {"quizId", q.quizId},
-        {"quizTitle", q.quizTitle},
-        {"classroomId", q.classroomId},
-        {"timeLimitMinutes", q.timeLimitMins},
-        {"questions", q.questions}
-    };
-}
-
-void from_json(const njson& j, quiz_data& q) {
-    q.quizId = j.value("quizId", "");
-    q.quizTitle = j.value("quizTitle", "");
-    q.classroomId = j.value("classroomId", "");
-    q.timeLimitMins = j.value("timeLimitMinutes", 0);
-    q.questions = j.value("questions", std::vector<Question>{});
-}
+void from_json(const njson& j, quiz_data& q);
 
 
 class quiz_hashTable {

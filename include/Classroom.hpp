@@ -1,16 +1,16 @@
 #ifndef CLASSROOM_HPP
 #define CLASSROOM_HPP
 
+#include "crow.h"
+#include "crow/middlewares/cookie_parser.h"
+#include "crow/middlewares/session.h"
 #include <iostream>
-#include <string>
+#include <filesystem>
 #include <vector>
-#include <fstream>
-#include <random>
-#include <sstream>
-#include "json.hpp"
-#include "users.hpp"
+#include <string>
+#include <any>
 
-using json = nlohmann::json;
+using njson = nlohmann::json;
 
 struct classroom_data {
     std::string class_name;
@@ -29,16 +29,7 @@ struct classroom_link {
     classroom_link* next = nullptr;
 };
 
-void to_json(json& j, const classroom_data& c) {
-    j = json{
-        {"class_name", c.class_name},
-        {"subject", c.subject},
-        {"class_code", c.class_code},
-        {"teacher_username", c.teacher_username},
-        {"student_usernames", c.student_usernames},
-        {"quizIds", c.quizIds}
-    };
-}
+void to_json(njson& j, const classroom_data& c);
 
 class classroom_hashTable {
 private:
@@ -70,7 +61,7 @@ private:
     }
 
     void makeClassrooms_hashtable(int& table_size, std::ifstream& file) {
-        json data;
+        njson data;
 
         file>>data;
         for (const auto& room : data) {
@@ -147,7 +138,7 @@ public:
     ~classroom_hashTable() {
         std::cout << "Saving classroom data to file..." << std::endl;
 
-        json classrooms_json_array = json::array();
+        njson classrooms_json_array = njson::array();
         for (int i = 0; i < size; ++i) {
             classroom_link* curr = classrooms[i];
             while (curr != nullptr) {
