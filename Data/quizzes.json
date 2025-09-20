@@ -1,9 +1,9 @@
 [
     {
-        "classroomId": "1J6WJY",
+        "classroomId": "SPVH8J",
         "questions": [
             {
-                "correctAnswerIndex": 1,
+                "correctAnswerIndex": 0,
                 "options": [
                     "fine",
                     "good",
@@ -13,7 +13,7 @@
                 "questionText": "How are you?"
             }
         ],
-        "quizId": "IAX8MY",
+        "quizId": "SES64N",
         "quizTitle": "Basic question",
         "timeLimitMinutes": 1
     }

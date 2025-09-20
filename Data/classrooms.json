@@ -1,8 +1,10 @@
 [
     {
-        "class_code": "VNX2NI",
+        "class_code": "SPVH8J",
         "class_name": "CSE B",
-        "quizIds": [],
+        "quizIds": [
+            "SES64N"
+        ],
         "student_usernames": [],
         "subject": "DSA",
         "teacher_username": "Yuvraj_111"

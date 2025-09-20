@@ -132,6 +132,9 @@ void registerQuizRoutes(crow::App<crow::CookieParser,Session>& app, user_hashTab
             return crow::response(500, "Could not find classroom.");
         }
 
+        quiz_table.saveQuizzesToFile();
+        classroom_table.saveClassroomsToFile();
+
         crow::response res(303);
         res.add_header("Location","/quiz_created");
         return res;

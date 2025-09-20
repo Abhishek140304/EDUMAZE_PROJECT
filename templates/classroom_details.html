@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ class_name }} - Details</title>
+    <link rel="stylesheet" href="/static/classroom_details.css"> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <nav class="sidebar">
+            <div class="sidebar-header"><i class="fa-solid fa-chalkboard-user"></i><h2>QuizMaster</h2></div>
+            <div class="sidebar-nav">
+                <a href="teacher_dashboard"><i class="fa fa-home"></i> Dashboard</a>
+                <a href="my_classrooms" class="active"><i class="fa fa-users"></i> My Classrooms</a>
+                <a href="my_quizzes"><i class="fa fa-file-alt"></i> My Quizzes</a>
+            </div>
+            <div class="sidebar-footer"><a href="logout"><i class="fa fa-sign-out-alt"></i> Logout</a></div>
+        </nav>
+
+        <main class="main-content">
+            <header class="header">
+                <h1>{{ class_name }}</h1>
+            </header>
+
+            <div class="class-info-header">
+                <h2><i class="fas fa-book-open"></i> Subject: {{ subject }}</h2>
+                <div class="class-code-display">
+                    <strong>Class Code:</strong> <span>{{ class_code }}</span>
+                </div>
+                <a href="/create_quiz?class={{class_code}}" class="btn-action">📝 Create Quiz for this Class</a>
+            </div>
+            
+            <div class="details-grid">
+                <div class="details-card">
+                    <h3><i class="fas fa-user-graduate"></i> Enrolled Students</h3>
+                    {{#students}}
+                    <ul class="item-list">
+                        {{#.}}
+                        <li>{{ name }} ({{ username }})</li>
+                        {{/.}}
+                    </ul>
+                    {{/students}}
+                    {{^students}}
+                    <p class="empty-message">No students have joined this class yet.</p>
+                    {{/students}}
+                </div>
+
+                <div class="details-card">
+                    <h3><i class="fas fa-file-alt"></i> Quizzes</h3>
+                    {{#quizzes}}
+                    <ul class="item-list">
+                        {{#.}}
+                        <li>
+                            <span>{{ quizTitle  }}</span>
+                            <a href="/quiz/{{quizId}}/results" class="btn-view-small">View Results</a>
+                        </li>
+                        {{/.}}
+                    </ul>
+                    {{/quizzes}}
+                    {{^quizzes}}
+                    <p class="empty-message">No quizzes have been created for this class.</p>
+                    {{/quizzes}}
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

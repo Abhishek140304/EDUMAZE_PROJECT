@@ -155,7 +155,7 @@ int main(){
 
     registerTeachersRoutes(app,user_table);
 
-    registerClassroomRoutes(app,user_table, classroom_table);
+    registerClassroomRoutes(app,user_table, classroom_table, quiz_table);
 
     registerQuizRoutes(app,user_table, classroom_table, quiz_table);
 

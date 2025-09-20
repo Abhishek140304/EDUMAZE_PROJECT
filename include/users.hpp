@@ -173,7 +173,7 @@ public:
         makeTeacher_hashtable(size, teacherFile);
     }
 
-    student_data* findStudent(std::string& s){
+    student_data* findStudent(const std::string& s){
         uint32_t index=fnv1a(s)%size;
         student_link* node=students[index];
         while(node){

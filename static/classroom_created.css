@@ -1,0 +1,86 @@
+/* ===== Google Fonts & Global Styles ===== */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css');
+
+:root {
+    --primary-color: #6e8efb;
+    --background-color: #f4f7fc;
+    --surface-color: #ffffff;
+    --text-color: #333;
+    --subtle-text-color: #666;
+    --success-color: #28a745;
+    --border-radius: 15px;
+    --shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
+    --font-family: 'Poppins', sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: var(--font-family);
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* ===== Main Container ===== */
+.dashboard-container {
+    width: 100%;
+    max-width: 600px;
+    margin: 20px;
+}
+
+/* ===== Header ===== */
+.header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+.header h1 {
+    font-size: 2.5rem;
+    color: var(--success-color);
+}
+
+/* ===== Form Card ===== */
+.form-container {
+    background-color: var(--surface-color);
+    padding: 30px 25px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    text-align: center;
+}
+
+/* ===== Class Code Display ===== */
+.class-code-display {
+    background-color: #e9ecef;
+    padding: 20px;
+    font-size: 2.5em;
+    font-family: monospace;
+    letter-spacing: 5px;
+    margin: 20px 0;
+    border-radius: 8px;
+    color: #495057;
+    font-weight: bold;
+}
+
+/* ===== Buttons ===== */
+.btn {
+    width: 100%;
+    padding: 15px;
+    border-radius: 8px;
+    border: none;
+    font-size: 1em;
+    font-weight: 600;
+    color: white;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    background: linear-gradient(135deg, var(--primary-color), #a777e3);
+    margin-top: 15px;
+}
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}

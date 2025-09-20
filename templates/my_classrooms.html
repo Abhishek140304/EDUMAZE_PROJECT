@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Classrooms</title>
+    <link rel="stylesheet" href="/static/my_classroom.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <nav class="sidebar">
+            <div class="sidebar-header"><i class="fa-solid fa-chalkboard-user"></i><h2>QuizMaster</h2></div>
+            <div class="sidebar-nav">
+                <a href="teacher_dashboard"><i class="fa fa-home"></i> Dashboard</a>
+                <a href="my_classrooms" class="active"><i class="fa fa-users"></i> My Classrooms</a>
+                <a href="my_quizzes"><i class="fa fa-file-alt"></i> My Quizzes</a>
+            </div>
+            <div class="sidebar-footer"><a href="logout"><i class="fa fa-sign-out-alt"></i> Logout</a></div>
+        </nav>
+
+        <main class="main-content">
+            <header class="header">
+                <h1>My Classrooms</h1>
+                <div class="profile">
+                    <div class="profile-info">
+                        <span>{{ teacher_username }}</span><i class="fas fa-chevron-down" style="margin-left:10px; font-size:0.8em;"></i>
+                    </div>
+                </div>
+            </header>
+
+            <section class="content-container">
+                <div class="content-header">
+                    <h2>All Your Classrooms</h2>
+                    <a href="create_classroom" class="btn-create-new">➕ Add New Classroom</a>
+                </div>
+                
+                {{#classrooms}}
+                <table class="content-table">
+                    <thead>
+                        <tr>
+                            <th>Class Name</th>
+                            <th>Subject</th>
+                            <th>Class Code</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#.}}
+                        <tr>
+                            <td>{{ class_name }}</td>
+                            <td>{{ subject }}</td>
+                            <td class="class-code">{{ class_code }}</td>
+                            <td><a href="/classroom/{{class_code}}" class="btn-action">View</a></td>
+                        </tr>
+                        {{/.}}
+                    </tbody>
+                </table>
+                {{/classrooms}}
+
+                {{^classrooms}}
+                <div class="no-content-message">
+                    <i class="fas fa-school"></i>
+                    <h3>No Classrooms Found</h3>
+                    <p>You haven't created any classrooms yet. Get started by creating one!</p>
+                </div>
+                {{/classrooms}}
+            </section>
+        </main>
+    </div>
+</body>
+</html>

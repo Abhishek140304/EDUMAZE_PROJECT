@@ -124,6 +124,20 @@ public:
     }
 
 
+    void saveQuizzesToFile() {
+        njson quizzes_json_array = njson::array();
+        for (int i = 0; i < size; ++i) {
+            quiz_link* curr = quizzes[i];
+            while (curr != nullptr) {
+                quizzes_json_array.push_back(*(curr->data));
+                curr = curr->next;
+            }
+        }
+        std::ofstream quizFile("Data/quizzes.json");
+        quizFile << quizzes_json_array.dump(4);
+        quizFile.close();
+    }
+
     quiz_data* createQuiz(const std::string& title, const std::string& classroomId, int timeLimit, const std::vector<Question>& questions) {
         std::string id = generate_quiz_id();
         uint32_t index = fnv1a(id) % size;
@@ -164,9 +178,9 @@ public:
                 curr = next;
             }
         }
-        std::ofstream classroomFile("Data/quizzes.json");
-        classroomFile << quizzes_json_array.dump(4);
-        classroomFile.close();
+        std::ofstream quizFile("Data/quizzes.json");
+        quizFile << quizzes_json_array.dump(4);
+        quizFile.close();
 
         delete[] quizzes;
     }

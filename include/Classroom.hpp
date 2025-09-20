@@ -106,6 +106,21 @@ public:
         }
     }
 
+    void saveClassroomsToFile() {
+        njson classrooms_json_array = njson::array();
+        for (int i = 0; i < size; ++i) {
+            classroom_link* curr = classrooms[i];
+            while (curr != nullptr) {
+                classrooms_json_array.push_back(*(curr->data));
+                classroom_link* next = curr->next;
+                curr = next;
+            }
+        }
+
+        std::ofstream classroomFile("Data/classrooms.json");
+        classroomFile << classrooms_json_array.dump(4);
+        classroomFile.close();
+    }
 
     std::string addClassroom(const std::string& name, const std::string& subject, teacher_data* teacher) {
         std::string code = generate_class_code();
@@ -119,8 +134,6 @@ public:
             newnode->next = classrooms[index];
         }
         classrooms[index] = newnode;
-
-        teacher->classroomIds.push_back(code);
 
         return code;
     }
