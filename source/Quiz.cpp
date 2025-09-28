@@ -72,7 +72,7 @@ void registerQuizRoutes(crow::App<crow::CookieParser,Session>& app, user_hashTab
 
         ctx["classrooms"] = std::move(classrooms_for_template);
 
-        auto page=crow::mustache::load("create_quiz.html");
+        auto page=crow::mustache::load("teacher/create_quiz.html");
         return crow::response(page.render(ctx));
 
     });
@@ -147,22 +147,7 @@ void registerQuizRoutes(crow::App<crow::CookieParser,Session>& app, user_hashTab
             return crow::response(303, "/error");
         }
         
-        auto page=crow::mustache::load("quiz_created.html");
+        auto page=crow::mustache::load("teacher/quiz_created.html");
         return crow::response(page.render());
-    });
-
-    CROW_ROUTE(app, "/quiz_attempt")([&app](const crow::request& req)->crow::response {
-        auto& session=app.get_context<Session>(req);
-        std::string user_type=session.get<std::string>("user_type");
-
-        if(user_type!="student"){
-            crow::response res(303);
-            res.add_header("Location", "/error");
-            return res;
-        }
-
-        auto page=crow::mustache::load("quiz_attempt.html");
-        return crow::response(page.render());
-
     });
 }

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join Classroom</title>
+    <link rel="stylesheet" href="/static/join_classroom.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<body>
+    <div class="join-container">
+        <div class="join-card">
+            <i class="fa-solid fa-chalkboard-user icon"></i>
+            <h1>Join a New Classroom</h1>
+            <p>Enter the 6-digit class code provided by your teacher.</p>
+            <form action="/join_classroom_post" method="POST">
+                <div class="input-group">
+                    <label for="class_code">Class Code</label>
+                    <input type="text" id="class_code" name="class_code" placeholder="e.g., SPVH8J" required pattern="[A-Z0-9]{6}">
+                </div>
+                <button type="submit" class="btn-join">Join Classroom</button>
+            </form>
+            <a href="/student_dashboard" class="back-link">
+                <i class="fa-solid fa-arrow-left"></i> Back to Dashboard
+            </a>
+        </div>
+    </div>
+</body>
+</html>

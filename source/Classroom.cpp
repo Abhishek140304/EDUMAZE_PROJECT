@@ -27,7 +27,7 @@ void registerClassroomRoutes(crow::App<crow::CookieParser,Session>& app, user_ha
         crow::mustache::context ctx;
         ctx["teacher_username"]=session.get<std::string>("username");
 
-        auto page=crow::mustache::load("create_classroom.html");
+        auto page=crow::mustache::load("teacher/create_classroom.html");
         return crow::response(page.render(ctx));
 
     });
@@ -80,7 +80,7 @@ void registerClassroomRoutes(crow::App<crow::CookieParser,Session>& app, user_ha
         crow::mustache::context ctx;
         ctx["class_code"]=req.url_params.get("code");
         
-        auto page=crow::mustache::load("classroom_created.html");
+        auto page=crow::mustache::load("teacher/classroom_created.html");
         return crow::response(page.render(ctx));
     });
 
@@ -120,7 +120,7 @@ void registerClassroomRoutes(crow::App<crow::CookieParser,Session>& app, user_ha
             ctx["classrooms"] = std::move(classrooms_list);
         }
 
-        auto page = crow::mustache::load("my_classrooms.html");
+        auto page = crow::mustache::load("teacher/my_classrooms.html");
         return crow::response(page.render(ctx));
     });
 
@@ -173,7 +173,101 @@ void registerClassroomRoutes(crow::App<crow::CookieParser,Session>& app, user_ha
             ctx["quizzes"] = std::move(quizzes_list);
         }
 
-        auto page = crow::mustache::load("classroom_details.html");
+        auto page = crow::mustache::load("teacher/classroom_details.html");
+        return crow::response(page.render(ctx));
+    });
+
+    CROW_ROUTE(app, "/join_classroom")([&app](const crow::request& req){
+        auto& session=app.get_context<Session>(req);
+        std::string user_type=session.get<std::string>("user_type");
+
+        if(user_type!="student"){
+            crow::response res(303);
+            res.add_header("Location", "/error");
+            return res;
+        }
+
+        crow::mustache::context ctx;
+
+        auto page=crow::mustache::load("student/join_classroom.html");
+        return crow::response(page.render(ctx));
+    });
+
+    CROW_ROUTE(app, "/join_classroom_post").methods("POST"_method)([&app, &user_table, &classroom_table](const crow::request& req) -> crow::response {
+        auto& session=app.get_context<Session>(req);
+
+        std::string user_type=session.get<std::string>("user_type");
+        std::string username=session.get<std::string>("username");
+        
+        if(user_type!="student" || username.empty()){
+            crow::response res(303);
+            res.add_header("Location", "/error");
+            return res;
+        }
+
+        auto body=crow::query_string("?"+req.body);
+
+        const char* code_cstr=body.get("class_code");
+        if(!code_cstr){
+            crow::response res(303);
+            res.add_header("Location", "/error");
+            return res;
+        }
+        std::string class_code(code_cstr);
+
+        classroom_data* classroom=classroom_table.findClassroom(class_code);
+        if(!classroom){
+            crow::response res(303);
+            res.add_header("Location", "/error");
+            return res;
+        }
+
+        student_data* student=user_table.findStudent(username);
+        if(!student){
+            crow::response res(303);
+            res.add_header("Location", "/error");
+            return res;
+        }
+
+        auto& students_in_class=classroom->student_usernames;
+        if (std::find(students_in_class.begin(), students_in_class.end(), username) != students_in_class.end()) {
+            return crow::response(303, "You are already in this classroom.");
+        }
+
+        classroom->student_usernames.push_back(username);
+        student->classroomIds.push_back(class_code);
+
+        classroom_table.saveClassroomsToFile();
+        user_table.saveStudentsToFile();
+
+        crow::response res(303);
+        res.add_header("Location", "/classroom_joined?code="+class_code);
+        return res;
+
+    });
+
+    CROW_ROUTE(app, "/classroom_joined")([&app, &classroom_table](const crow::request& req){
+        auto& session = app.get_context<Session>(req);
+        if (session.get<std::string>("user_type") != "student") {
+            crow::response res(303);
+            res.add_header("Location", "/error");
+            return res;
+        }
+        
+        const char* class_code = req.url_params.get("code");
+
+        classroom_data* room=classroom_table.findClassroom(class_code);
+        if(!room){
+            crow::response res(303);
+            res.add_header("Location", "/error");
+            return res;
+        }
+
+        crow::mustache::context ctx;
+        ctx["class_name"]=room->class_name;
+        ctx["class_code"]=room->class_code;
+
+        auto page=crow::mustache::load("student/classroom_joined.html");
         return crow::response(page.render(ctx));
     });
 

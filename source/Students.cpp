@@ -29,7 +29,7 @@ void registerStudentsRoutes(crow::App<crow::CookieParser,Session>& app, user_has
         ctx["student_name"] = data->name;
         ctx["student_username"] = data->username;
 
-        auto page=crow::mustache::load("student_dashboard.html");
+        auto page=crow::mustache::load("student/student_dashboard.html");
         return crow::response(page.render(ctx));
 
     });

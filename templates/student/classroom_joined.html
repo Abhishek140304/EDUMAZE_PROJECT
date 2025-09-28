@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Classroom Joined</title>
+    <link rel="stylesheet" href="/static/classroom_joined.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<body>
+    <div class="success-card">
+        <div class="icon-container">
+            <i class="fa-solid fa-circle-check"></i>
+        </div>
+        <h1>Success!</h1>
+        <p>You have successfully joined the classroom: <strong>{{ class_name }}</strong></p>
+        <div class="button-group">
+            <a href="/student/classroom/{{ class_code }}" class="btn btn-primary">Go to Classroom</a>
+            <a href="/student_dashboard" class="btn btn-secondary">Back to Dashboard</a>
+        </div>
+    </div>
+</body>
+</html>

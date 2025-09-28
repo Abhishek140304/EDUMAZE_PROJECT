@@ -14,7 +14,9 @@
         "username": "Ankit_111"
     },
     {
-        "classroomIds": [],
+        "classroomIds": [
+            "SPVH8J"
+        ],
         "email": "106124004@nitt.edu",
         "name": "Abhishek",
         "password": "abhishek",

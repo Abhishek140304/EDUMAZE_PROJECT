@@ -80,6 +80,7 @@ body {
 .card p { color: var(--subtle-text-color); }
 .card .icon { font-size: 2rem; color: var(--primary-color); margin-bottom: 15px; }
 
+
 /* Animations */
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 @keyframes popIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }

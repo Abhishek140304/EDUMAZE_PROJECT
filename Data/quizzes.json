@@ -5,6 +5,24 @@
             {
                 "correctAnswerIndex": 0,
                 "options": [
+                    "ordered collection of similar elements",
+                    "unordered collection of similar elements",
+                    "ordered collection of dissimilar elements",
+                    "unordered collection of dissimilar elements"
+                ],
+                "questionText": "what is array?"
+            }
+        ],
+        "quizId": "N29EZ4",
+        "quizTitle": "ARRAYS",
+        "timeLimitMinutes": 2
+    },
+    {
+        "classroomId": "SPVH8J",
+        "questions": [
+            {
+                "correctAnswerIndex": 0,
+                "options": [
                     "fine",
                     "good",
                     "ok",

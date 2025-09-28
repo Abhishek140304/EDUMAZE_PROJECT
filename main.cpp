@@ -34,9 +34,9 @@ int main(){
 
         crow::response res(303);
         if (user_type == "student") {
-            res.add_header("Location", "/student_dashboard");
+            res.add_header("Location", "student_dashboard");
         } else {
-            res.add_header("Location", "/teacher_dashboard");
+            res.add_header("Location", "teacher_dashboard");
         }
         return res;
     });
@@ -74,14 +74,14 @@ int main(){
                 student_data* data=user_table.findStudent(*user);
                 if(data && data->password==pass){
                     login_success=true;
-                    destination="/student_dashboard";
+                    destination="student_dashboard";
                 }
             }
             else if(role=="teacher"){
                 teacher_data* data=user_table.findTeacher(*user);
                 if(data && data->password==pass){
                     login_success=true;
-                    destination="/teacher_dashboard";
+                    destination="teacher_dashboard";
                 }
             }
         }
@@ -159,24 +159,10 @@ int main(){
 
     registerQuizRoutes(app,user_table, classroom_table, quiz_table);
 
-    CROW_ROUTE(app, "/leaderboard")([&app](const crow::request& req)->crow::response {
-        auto& session=app.get_context<Session>(req);
-        std::string user_type=session.get<std::string>("user_type");
-
-        if(user_type!="student"){
-            crow::response res(303);
-            res.add_header("Location", "/error");
-            return res;
-        }
-
-        auto page=crow::mustache::load("leaderboard.html");
-        return crow::response(page.render());
-
-    });
-
     std::cout << "Server running at http://localhost:18080\n";
 
-    app.port(18080).multithreaded().run();
+    app.port(18080).multithreaded().bindaddr("0.0.0.0").run();
+
     }catch (const std::exception& e) {
         std::cerr << "[ERROR] Exception: " << e.what() << std::endl;
     }

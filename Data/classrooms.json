@@ -3,9 +3,12 @@
         "class_code": "SPVH8J",
         "class_name": "CSE B",
         "quizIds": [
-            "SES64N"
+            "SES64N",
+            "N29EZ4"
         ],
-        "student_usernames": [],
+        "student_usernames": [
+            "Abhishek_111"
+        ],
         "subject": "DSA",
         "teacher_username": "Yuvraj_111"
     }

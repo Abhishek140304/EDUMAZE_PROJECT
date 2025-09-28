@@ -15,11 +15,12 @@ struct student_data {
     std::string password;
     std::vector<std::string> classroomIds;
     
-    student_data(const std:: string& thename,const std::string& theusername,const std::string& theemail,const std::string& thepassword):
+    student_data(const std:: string& thename,const std::string& theusername,const std::string& theemail,const std::string& thepassword, const std::vector<std::string>& theclassroomIds={}):
     name(thename),
     username(theusername),
     email(theemail), 
-    password(thepassword)
+    password(thepassword),
+    classroomIds(theclassroomIds)
     {}
 };
 struct student_link{
