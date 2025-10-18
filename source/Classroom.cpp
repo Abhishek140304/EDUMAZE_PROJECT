@@ -271,4 +271,41 @@ void registerClassroomRoutes(crow::App<crow::CookieParser,Session>& app, user_ha
         return crow::response(page.render(ctx));
     });
 
+    CROW_ROUTE(app, "/student/classroom/<string>")([&app, &classroom_table, &quiz_table](const crow::request& req, const std::string& class_code) -> crow::response {
+        auto& session=app.get_context<Session>(req);
+        std::string user_type=session.get<std::string>("user_type");
+        if(user_type!="student"){
+            return crow::response(303,"/error");
+        }
+
+        classroom_data* room=classroom_table.findClassroom(class_code);
+        if(!room){
+            return crow::response(404, "/error");
+        }
+
+        crow::mustache::context ctx;
+        ctx["class_name"]=room->class_name;
+        ctx["class_code"]=room->class_code;
+        ctx["subject"]=room->subject;
+
+        std::vector<crow::json::wvalue> quizzes_list;
+        for(const auto& quiz_id: room->quizIds){
+            quiz_data* quiz=quiz_table.findQuiz(quiz_id);
+            if(quiz){
+                crow::json::wvalue quiz_obj;
+                quiz_obj["quizTitle"]=quiz->quizTitle;
+                quiz_obj["quizId"]=quiz->quizId;
+                quiz_obj["timeLimitMins"]=quiz->timeLimitMins;
+                quizzes_list.push_back(std::move(quiz_obj));
+            }
+        }
+
+        if(!quizzes_list.empty()){
+            ctx["quizzes"]=std::move(quizzes_list);
+        }
+
+        auto page=crow::mustache::load("student/classroom_details.html");
+        return crow::response(page.render(ctx));
+    });
+
 }

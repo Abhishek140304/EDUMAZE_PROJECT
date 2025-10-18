@@ -14,7 +14,7 @@ void registerClassroomRoutes(crow::App<crow::CookieParser,Session>& app, user_ha
 
 void registerQuizRoutes(crow::App<crow::CookieParser,Session>& app, user_hashTable& user_table, classroom_hashTable& classroom_table, quiz_hashTable& quiz_table);
 
-void registerStudentsRoutes(crow::App<crow::CookieParser,Session>& app, user_hashTable& user_table);
+void registerStudentsRoutes(crow::App<crow::CookieParser,Session>& app, user_hashTable& user_table, classroom_hashTable& classroom_table);
 
 void registerTeachersRoutes(crow::App<crow::CookieParser,Session>& app, user_hashTable& user_table);
 

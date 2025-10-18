@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-R-8">
+    <title>{{ class_name }} - Quizzes</title>
+    <link rel="stylesheet" href="/static/student/classroom_details.css"> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .quiz-list { padding: 20px; }
+        .quiz-item { 
+            background: #fff; 
+            border-radius: 8px; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05); 
+            padding: 20px; 
+            margin-bottom: 15px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+        }
+        .quiz-item h3 { margin: 0; font-size: 1.4em; }
+        .quiz-item p { margin: 5px 0 0; color: #555; }
+        .start-quiz-btn { 
+            background-color: #28a745; /* Green start button */
+            color: white; 
+            padding: 10px 15px; 
+            text-decoration: none; 
+            border-radius: 5px; 
+            font-weight: bold; 
+            transition: background-color 0.2s ease;
+        }
+        .start-quiz-btn:hover { background-color: #218838; }
+        .back-link { 
+            display: inline-block; 
+            margin: 20px 0 0 20px; 
+            color: #007bff; 
+            text-decoration: none; 
+            font-size: 1.1em;
+        }
+        .back-link:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <nav class="sidebar">
+            <div class="sidebar-header"><i class="fa-solid fa-graduation-cap"></i><h2>QuizMaster</h2></div>
+            <div class="sidebar-nav">
+                <a href="/student_dashboard" class="active"><i class="fa fa-home"></i> Dashboard</a>
+                <a href="/student_progress.html"><i class="fa fa-chart-line"></i> My Progress</a>
+                <a href="leaderboard"><i class="fa fa-trophy"></i> Leaderboards</a>
+            </div>
+            <div class="sidebar-footer"><a href="logout"><i class="fa fa-sign-out-alt"></i> Logout</a></div>
+        </nav>
+        
+        <main class="main-content">
+            <header class="header">
+                <h1>{{ class_name }}</h1>
+                <p style="margin-top:-10px; font-size: 1.2em; color: #444;">{{ subject }}</p>
+            </header>
+            
+            <a href="/student_dashboard" class="back-link">&larr; Back to Dashboard</a>
+            
+            <section class="quiz-list">
+                <h2>Available Quizzes</h2>
+                
+                {{^quizzes}}
+                    <p>No quizzes have been posted for this class yet. Check back later!</p>
+                {{/quizzes}}
+                
+                {{#quizzes}}
+                    <div class="quiz-item">
+                        <div>
+                            <h3>{{ quizTitle }}</h3>
+                            <p>Time Limit: {{ timeLimitMins }} minutes</p>
+                        </div>
+                        <a href="/attempt_quiz/{{quizId}}" class="start-quiz-btn">Start Quiz</a>
+                    </div>
+                {{/quizzes}}
+            </section>
+        </main>
+    </div>
+</body>
+</html>

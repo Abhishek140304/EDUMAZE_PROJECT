@@ -81,7 +81,14 @@ class user_hashTable{
         file>>data;
         for(const auto& user:data){
             uint32_t index=fnv1a(user["username"])%size;
-            student_data* new_user=new student_data(user["name"], user["username"],user["email"],user["password"]);
+
+            std::vector<std::string> classrooms;
+            if(user.contains("classroomIds") && user["classroomIds"].is_array()){
+                classrooms = user["classroomIds"].get<std::vector<std::string>>();
+            }
+
+            student_data* new_user=new student_data(user["name"], user["username"],user["email"],user["password"], classrooms);
+            
             student_link* newnode=new student_link;
             newnode->data=new_user;
             if(students[index]){

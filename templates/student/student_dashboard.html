@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Dashboard</title>
-    <link rel="stylesheet" href="/static/student_dashboard.css">
+    <link rel="stylesheet" href="/static/student/student_dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 <body>
     <div class="dashboard-container">
@@ -17,20 +18,24 @@
             </div>
             <div class="sidebar-footer"><a href="logout"><i class="fa fa-sign-out-alt"></i> Logout</a></div>
         </nav>
+
         <main class="main-content">
             <header class="header">
                 <h1>Hello, {{ student_name }}!</h1>
-                <div class="profile">
+                <div class="profile" onclick="toggleProfileDropdown()">
                     <div class="profile-info">
-                        <span>{{ student_username }}</span><i class="fas fa-chevron-down" style="margin-left:10px; font-size:0.8em;"></i>
+                        <span>{{ student_username }}</span>
+                        <i class="fas fa-chevron-down" style="margin-left:10px; font-size:0.8em;"></i>
                     </div>
-                    <div class="profile-dropdown">
+                    <div class="profile-dropdown" id="profileDropdown">
                         <a href="#"><i class="fas fa-user-circle"></i> Profile</a>
                         <a href="logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
                     </div>
                 </div>
             </header>
+
             <section class="card-grid">
+                <!-- Join Classroom Card -->
                 <a href="join_classroom" style="text-decoration:none; color:inherit;">
                     <div class="card">
                         <div class="icon">
@@ -40,6 +45,8 @@
                         <p>Enter a code from your teacher to join a new class and access quizzes.</p>
                     </div>
                 </a>
+
+                <!-- Upcoming Quizzes Card -->
                 <div class="card">
                     <div class="icon">
                         <i class="fa-solid fa-list-check"></i>
@@ -47,9 +54,44 @@
                     <h3>Upcoming Quizzes</h3>
                     <p>You have <strong>2</strong> new quizzes available. Check them out now!</p>
                 </div>
+
+                <!-- Classroom Cards -->
+                {{^classrooms}}
+                    <div class="card">
+                        <div class="icon">
+                            <i class="fa-solid fa-chalkboard-user"></i>
+                        </div>
+                        <h3>No Classrooms Yet</h3>
+                        <p>You haven't joined any classrooms yet. Click "Join a Classroom" to get started!</p>
+                    </div>
+                {{/classrooms}}
+
+                {{#classrooms}}
+                <a href="/student/classroom/{{class_code}}" class="card-link" style="text-decoration:none; color:inherit;">
+                    <div class="card">
+                        <div class="icon">
+                            <i class="fa-solid fa-chalkboard-user"></i>
+                        </div>
+                        <h3>{{ class_name }}</h3>
+                        <p>{{ subject }}</p>
+                        <span>Code: {{ class_code }}</span>
+                    </div>
+                </a>
+                {{/classrooms}}
             </section>
         </main>
     </div>
-    
+
+    <script>
+        function toggleProfileDropdown() {
+            const dropdown = document.getElementById("profileDropdown");
+            dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+        }
+
+        window.addEventListener("click", function(e) {
+            const dropdown = document.getElementById("profileDropdown");
+            if (!e.target.closest(".profile")) dropdown.style.display = "none";
+        });
+    </script>
 </body>
 </html>

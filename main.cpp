@@ -151,7 +151,7 @@ int main(){
         return crow::response(page.render());
     });
 
-    registerStudentsRoutes(app,user_table);
+    registerStudentsRoutes(app,user_table, classroom_table);
 
     registerTeachersRoutes(app,user_table);
 
