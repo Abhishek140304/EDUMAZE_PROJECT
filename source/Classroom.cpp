@@ -166,6 +166,7 @@ void registerClassroomRoutes(crow::App<crow::CookieParser,Session>& app, user_ha
                 crow::json::wvalue quiz_obj;
                 quiz_obj["quizTitle"] = quiz->quizTitle;
                 quiz_obj["quizId"] = quiz->quizId;
+                quiz_obj["quizLink"] = "/quiz_leaderboard/" + quiz->quizId;
                 quizzes_list.push_back(std::move(quiz_obj));
             }
         }
@@ -296,6 +297,7 @@ void registerClassroomRoutes(crow::App<crow::CookieParser,Session>& app, user_ha
                 quiz_obj["quizTitle"]=quiz->quizTitle;
                 quiz_obj["quizId"]=quiz->quizId;
                 quiz_obj["timeLimitMins"]=quiz->timeLimitMins;
+                quiz_obj["quizLink"] = "/student/attempt_quiz/" + quiz->quizId;
                 quizzes_list.push_back(std::move(quiz_obj));
             }
         }

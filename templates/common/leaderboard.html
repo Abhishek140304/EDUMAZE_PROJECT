@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaderboard: {{quizTitle}}</title>
+    <link rel="stylesheet" href="/static/common/leaderboard.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Leaderboard</h1>
+        <h2>{{quizTitle}}</h2>
+
+        {{#error_message}}
+            <div class="error-message">{{error_message}}</div>
+        {{/error_message}}
+
+        {{#leaderboard}}
+        <table class="leaderboard-table">
+            <thead>
+                <tr>
+                    <th class="rank">Rank</th>
+                    <th>Student</th>
+                    <th class="score">Score</th>
+                    <th>Time Taken (M:SS)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#leaderboard}}
+                <tr>
+                    <td class="rank">{{rank}}</td>
+                    <td>{{studentUsername}}</td>
+                    <td class="score">{{score}} / {{totalQuestions}}</td>
+                    <td>{{timeTaken}}</td>
+                </tr>
+                {{/leaderboard}}
+            </tbody>
+        </table>
+        {{/leaderboard}}
+
+        {{^leaderboard}}
+        <p class="no-results">No one has attempted this quiz yet.</p>
+        {{/leaderboard}}
+        
+        <a href="javascript:history.back()" class="back-link">Go Back</a>
+    </div>
+</body>
+</html>

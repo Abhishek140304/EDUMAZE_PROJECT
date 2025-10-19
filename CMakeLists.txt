@@ -14,6 +14,7 @@ add_executable(dsa_project
     source/Quiz.cpp
     source/Students.cpp
     source/Teachers.cpp
+    source/QuizAttempt.cpp
 )
 
 target_include_directories(dsa_project PUBLIC 

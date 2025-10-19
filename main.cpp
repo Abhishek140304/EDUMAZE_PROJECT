@@ -15,6 +15,8 @@ int main(){
     user_hashTable user_table;
     classroom_hashTable classroom_table;
     quiz_hashTable quiz_table;
+    quiz_result_hashTable result_table;
+
 
     crow::mustache::set_base("templates");
 
@@ -158,6 +160,8 @@ int main(){
     registerClassroomRoutes(app,user_table, classroom_table, quiz_table);
 
     registerQuizRoutes(app,user_table, classroom_table, quiz_table);
+
+    registerQuizAttemptRoutes(app, quiz_table, result_table);
 
     std::cout << "Server running at http://localhost:18080\n";
 

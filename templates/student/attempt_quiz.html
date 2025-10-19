@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attempt Quiz: {{quizTitle}}</title>
+    <link rel="stylesheet" href="/static/student/quiz_attempt.css">
+</head>
+<body>
+    <div id="timer">Loading...</div>
+    <div class="container">
+        <h1>{{quizTitle}}</h1>
+        <form id="quiz-form" action="/student/submit_quiz" method="POST">
+            <input type="hidden" name="quizId" value="{{quizId}}">
+            <input type="hidden" name="startTime" value="{{startTime}}">
+            
+            {{#questions}}
+            <div class="question-block">
+                <p class="question-text">{{questionIndex | +1}}. {{questionText}}</p>
+                <div class="options-list">
+                    {{#options}}
+                    <div class="option-item">
+                        <input type="radio" id="q{{questionIndex}}_o{{optionIndex}}" name="answer_{{questionIndex}}" value="{{optionIndex}}" required>
+                        <label for="q{{questionIndex}}_o{{optionIndex}}">{{optionText}}</label>
+                    </div>
+                    {{/options}}
+                </div>
+            </div>
+            {{/questions}}
+
+            <button type="submit" class="submit-btn">Submit Quiz</button>
+        </form>
+    </div>
+
+    <script>
+        const timeLimitMins = {{timeLimitMins}};
+        const timeLimitSecs = timeLimitMins * 60;
+        const timerElement = document.getElementById('timer');
+        const quizForm = document.getElementById('quiz-form');
+        let timeRemaining = timeLimitSecs;
+
+        function updateTimer() {
+            const minutes = Math.floor(timeRemaining / 60);
+            let seconds = timeRemaining % 60;
+            seconds = seconds < 10 ? '0' + seconds : seconds; // Add leading zero
+
+            timerElement.textContent = `${minutes}:${seconds}`;
+
+            if (timeRemaining <= 0) {
+                clearInterval(timerInterval);
+                timerElement.textContent = "Time's Up!";
+                timerElement.style.backgroundColor = '#f0ad4e';
+                // Auto-submit the form
+                console.log("Time's up! Submitting form.");
+                quizForm.submit();
+            } else {
+                 if (timeRemaining < 60 && timeRemaining % 2 === 0) {
+                    timerElement.style.backgroundColor = '#f0ad4e'; // Warning color
+                } else if (timeRemaining < 60) {
+                    timerElement.style.backgroundColor = '#d9534f'; // Back to red
+                }
+                timeRemaining--;
+            }
+        }
+
+        updateTimer(); // Initial call to display timer immediately
+        const timerInterval = setInterval(updateTimer, 1000);
+    </script>
+</body>
+</html>
