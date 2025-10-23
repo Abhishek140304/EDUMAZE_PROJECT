@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Leaderboards</title>
+    <link rel="stylesheet" href="/static/teacher/teacher_dashboard.css">
+    <link rel="stylesheet" href="/static/teacher/classroom_details.css"> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <nav class="sidebar">
+            <div class="sidebar-header"><i class="fa-solid fa-chalkboard-user"></i><h2>QuizMaster</h2></div>
+            <div class="sidebar-nav">
+                <a href="/teacher_dashboard"><i class="fa fa-home"></i> Dashboard</a>
+                <a href="/my_classrooms"><i class="fa fa-users"></i> My Classrooms</a>
+                <a href="/leaderboard" class="active"><i class="fa fa-trophy"></i> Leaderboards</a>
+            </div>
+            <div class="sidebar-footer"><a href="/logout"><i class="fa fa-sign-out-alt"></i> Logout</a></div>
+        </nav>
+
+        <main class="main-content">
+            <header class="header">
+                <h1>All Quiz Leaderboards</h1>
+                <div class="profile">
+                    <div class="profile-info">
+                        <span>{{ teacher_username }}</span><i class="fas fa-chevron-down" style="margin-left:10px; font-size:0.8em;"></i>
+                    </div>
+                </div>
+            </header>
+            
+            <section class="details-grid">
+                {{#classrooms_with_quizzes}}
+                <div class="details-card">
+                    <h3><i class="fas fa-chalkboard"></i> {{ class_name }}</h3>
+                    <ul class="item-list">
+                        {{#quizzes}}
+                        <li>
+                            <span>{{ quizTitle }}</span>
+                            <a href="{{ quizLink }}" class="btn-view-small">View Leaderboard</a>
+                        </li>
+                        {{/quizzes}}
+                    </ul>
+                </div>
+                {{/classrooms_with_quizzes}}
+
+                {{^classrooms_with_quizzes}}
+                <div class="details-card">
+                    <p class="empty-message">No quizzes have been attempted yet. Create a quiz and have students take it to see leaderboards.</p>
+                </div>
+                {{/classrooms_with_quizzes}}
+            </section>
+        </main>
+    </div>
+</body>
+</html>

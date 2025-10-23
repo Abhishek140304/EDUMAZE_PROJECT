@@ -8,7 +8,6 @@
 #include <string>
 #include <any> 
 
-using Session=crow::SessionMiddleware<crow::InMemoryStore>;
 
 int main(){
     try{
@@ -153,9 +152,9 @@ int main(){
         return crow::response(page.render());
     });
 
-    registerStudentsRoutes(app,user_table, classroom_table);
+    registerStudentsRoutes(app, user_table, classroom_table, quiz_table);
 
-    registerTeachersRoutes(app,user_table);
+    registerTeachersRoutes(app,user_table,classroom_table,quiz_table);
 
     registerClassroomRoutes(app,user_table, classroom_table, quiz_table);
 

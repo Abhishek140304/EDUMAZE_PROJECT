@@ -5,24 +5,6 @@
             {
                 "correctAnswerIndex": 0,
                 "options": [
-                    "fdsf",
-                    "dsfds",
-                    "fsdfsd",
-                    "fsd"
-                ],
-                "questionText": "ffsdf"
-            }
-        ],
-        "quizId": "FYDZ2S",
-        "quizTitle": "ARRAYS",
-        "timeLimitMinutes": 2
-    },
-    {
-        "classroomId": "SPVH8J",
-        "questions": [
-            {
-                "correctAnswerIndex": 0,
-                "options": [
                     "ordered collection of similar elements",
                     "unordered collection of similar elements",
                     "ordered collection of dissimilar elements",
@@ -34,23 +16,5 @@
         "quizId": "N29EZ4",
         "quizTitle": "ARRAYS",
         "timeLimitMinutes": 2
-    },
-    {
-        "classroomId": "SPVH8J",
-        "questions": [
-            {
-                "correctAnswerIndex": 0,
-                "options": [
-                    "fine",
-                    "good",
-                    "ok",
-                    "don't know"
-                ],
-                "questionText": "How are you?"
-            }
-        ],
-        "quizId": "SES64N",
-        "quizTitle": "Basic question",
-        "timeLimitMinutes": 1
     }
 ]

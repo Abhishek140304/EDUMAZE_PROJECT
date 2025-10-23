@@ -1,17 +1,7 @@
 [
     {
-        "quizId": "FYDZ2S",
-        "resultId": "7PPOEX",
-        "score": 0,
-        "studentUsername": "Abhishek_111",
-        "submittedAnswers": [
-            1
-        ],
-        "timeTakenSeconds": 2.0
-    },
-    {
-        "quizId": "SES64N",
-        "resultId": "ZK951S",
+        "quizId": "N29EZ4",
+        "resultId": "E67PGQ",
         "score": 0,
         "studentUsername": "Abhishek_111",
         "submittedAnswers": [
@@ -21,12 +11,12 @@
     },
     {
         "quizId": "N29EZ4",
-        "resultId": "E67PGQ",
-        "score": 0,
-        "studentUsername": "Abhishek_111",
+        "resultId": "WOWUEI",
+        "score": 1,
+        "studentUsername": "Ankit_111",
         "submittedAnswers": [
-            1
+            0
         ],
-        "timeTakenSeconds": 2.0
+        "timeTakenSeconds": 3.0
     }
 ]

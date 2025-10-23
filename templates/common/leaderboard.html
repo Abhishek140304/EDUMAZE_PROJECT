@@ -15,7 +15,6 @@
             <div class="error-message">{{error_message}}</div>
         {{/error_message}}
 
-        {{#leaderboard}}
         <table class="leaderboard-table">
             <thead>
                 <tr>
@@ -26,8 +25,7 @@
                 </tr>
             </thead>
             <tbody>
-                {{#leaderboard}}
-                <tr>
+                {{#leaderboard}} <tr>
                     <td class="rank">{{rank}}</td>
                     <td>{{studentUsername}}</td>
                     <td class="score">{{score}} / {{totalQuestions}}</td>
@@ -36,10 +34,7 @@
                 {{/leaderboard}}
             </tbody>
         </table>
-        {{/leaderboard}}
-
-        {{^leaderboard}}
-        <p class="no-results">No one has attempted this quiz yet.</p>
+        {{^leaderboard}} <p class="no-results">No one has attempted this quiz yet.</p>
         {{/leaderboard}}
         
         <a href="javascript:history.back()" class="back-link">Go Back</a>

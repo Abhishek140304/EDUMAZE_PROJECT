@@ -79,7 +79,9 @@ void registerQuizAttemptRoutes(
 
         if (results_table.hasStudentAttempted(username, quiz_id)) {
             // Redirect to leaderboard if already taken
-            return crow::response(303, "/quiz_leaderboard/" + quiz_id + "?error=attempted");
+            crow::response res(303);
+            res.add_header("Location", "/quiz_leaderboard/" + quiz_id + "?error=attempted");
+            return res;
         }
 
         quiz_data* quiz = quiz_table.findQuiz(quiz_id);
@@ -195,7 +197,9 @@ void registerQuizAttemptRoutes(
         std::string user_type = session.get<std::string>("user_type");
         
         if (user_type != "student" && user_type != "teacher") {
-            return crow::response(303, "/error");
+            crow::response res(303);
+            res.add_header("Location", "/error");
+            return res;
         }
         
         quiz_data* quiz = quiz_table.findQuiz(quiz_id);
