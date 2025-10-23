@@ -1,13 +1,8 @@
 [
     {
-        "classroomIds": [],
-        "email": "106124090@nitt.edu",
-        "name": "Priya",
-        "password": "priya",
-        "username": "Priyadharshini_111"
-    },
-    {
-        "classroomIds": [],
+        "classroomIds": [
+            "SPVH8J"
+        ],
         "email": "106124018@nitt.edu",
         "name": "Ankit Kumar",
         "password": "ankit",

@@ -4,11 +4,21 @@
         "class_name": "CSE B",
         "quizIds": [
             "SES64N",
-            "N29EZ4"
+            "N29EZ4",
+            "FYDZ2S"
         ],
         "student_usernames": [
-            "Abhishek_111"
+            "Abhishek_111",
+            "Ankit_111"
         ],
+        "subject": "DSA",
+        "teacher_username": "Yuvraj_111"
+    },
+    {
+        "class_code": "A6X28H",
+        "class_name": "CSE B",
+        "quizIds": [],
+        "student_usernames": [],
         "subject": "DSA",
         "teacher_username": "Yuvraj_111"
     }
