@@ -2,8 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
     <title>{{ class_name }} - Quizzes</title>
-    <link rel="stylesheet" href="/static/student/classroom_details.css"> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="/static/student/classroom_details.css"> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 <body>
     <div class="dashboard-container">
@@ -18,18 +20,26 @@
         </nav>
         
         <main class="main-content">
+            <div class="overlay"></div>
+
             <header class="header">
-                <h1>{{ class_name }}</h1>
-                <p style="margin-top:-10px; font-size: 1.2em; color: #444;">{{ subject }}</p>
+                <button id="menu-toggle"><i class="fa fa-bars"></i></button>
+
+                <div>
+                    <h1>{{ class_name }}</h1>
+                    <p style="margin-top:-10px; font-size: 1.2em; color: #444;">{{ subject }}</p>
+                </div>
             </header>
             
-            <a href="/student_dashboard" class="active"><i class="fa fa-home"></i> Dashboard</a>
+            <a href="/student_dashboard" class="back-link" style="margin: 0 0 20px 0;">
+                <i class="fa-solid fa-arrow-left"></i> Back to Dashboard
+            </a>
             
             <section class="quiz-list">
                 <h2>Available Quizzes</h2>
                 
                 {{^quizzes}}
-                    <p>No quizzes have been posted for this class yet. Check back later!</p>
+                    <p class="empty-message">No quizzes have been posted for this class yet. Check back later!</p>
                 {{/quizzes}}
                 
                 {{#quizzes}}
@@ -44,5 +54,16 @@
             </section>
         </main>
     </div>
+
+    <script>
+        document.getElementById('menu-toggle').addEventListener('click', function() {
+            document.querySelector('.sidebar').classList.toggle('show');
+            document.querySelector('.overlay').classList.toggle('show');
+        });
+        document.querySelector('.overlay').addEventListener('click', function() {
+            document.querySelector('.sidebar').classList.remove('show');
+            this.classList.remove('show');
+        });
+    </script>
 </body>
 </html>

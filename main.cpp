@@ -43,12 +43,12 @@ int main(){
     });
 
     CROW_ROUTE(app, "/welcome_page")([](){
-        auto page=crow::mustache::load("welcome.html");
+        auto page=crow::mustache::load("common/welcome.html");
         return page.render();
     });
 
     CROW_ROUTE(app, "/loginpage")([](){
-        auto page=crow::mustache::load("login.html");
+        auto page=crow::mustache::load("common/login.html");
         return page.render();
     });
 
@@ -103,7 +103,7 @@ int main(){
     });
 
     CROW_ROUTE(app, "/signup")([](){
-        auto page=crow::mustache::load("signup.html");
+        auto page=crow::mustache::load("common/signup.html");
         return page.render();
     });
 
@@ -148,7 +148,7 @@ int main(){
     });
 
     CROW_ROUTE(app,"/error")([](){
-        auto page=crow::mustache::load("error.html");
+        auto page=crow::mustache::load("common/error.html");
         return crow::response(page.render());
     });
 

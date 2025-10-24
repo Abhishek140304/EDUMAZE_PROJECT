@@ -30,6 +30,9 @@ body {
 
 .join-container {
     padding: 20px;
+    width: 100%; /* Ensure container respects padding */
+    display: flex;
+    justify-content: center;
 }
 
 .join-card {
@@ -137,3 +140,22 @@ body {
 .success-message { background-color: var(--success-color); }
 
 @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ===== Responsive Adjustments ===== */
+@media (max-width: 480px) {
+    .join-container {
+        padding: 10px;
+    }
+    .join-card {
+        padding: 25px;
+    }
+    .join-card h1 {
+        font-size: 1.5rem;
+    }
+    .join-card p {
+        font-size: 0.9rem;
+    }
+    .btn-join {
+        padding: 12px;
+    }
+}

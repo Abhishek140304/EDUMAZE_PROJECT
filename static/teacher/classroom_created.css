@@ -25,13 +25,14 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
+    padding: 15px; /* Add padding for small screens */
 }
 
 /* ===== Main Container ===== */
 .dashboard-container {
     width: 100%;
     max-width: 600px;
-    margin: 20px;
+    margin: 20px 0;
 }
 
 /* ===== Header ===== */
@@ -64,6 +65,7 @@ body {
     border-radius: 8px;
     color: #495057;
     font-weight: bold;
+    word-break: break-all; /* Ensure code breaks if needed */
 }
 
 /* ===== Buttons ===== */
@@ -79,8 +81,32 @@ body {
     transition: transform 0.2s, box-shadow 0.2s;
     background: linear-gradient(135deg, var(--primary-color), #a777e3);
     margin-top: 15px;
+    text-decoration: none; /* For <a> tag */
+    display: inline-block; /* For <a> tag */
 }
 .btn:hover {
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* ===== Responsive Adjustments ===== */
+@media (max-width: 480px) {
+    .form-container {
+        padding: 20px;
+    }
+    .header h1 {
+        font-size: 1.8rem;
+    }
+    .form-container h2 {
+        font-size: 1.2rem;
+    }
+    .class-code-display {
+        font-size: 1.8em; /* Reduce font size on mobile */
+        letter-spacing: 3px;
+        padding: 15px;
+    }
+    .btn {
+        padding: 12px;
+        font-size: 0.95rem;
+    }
 }

@@ -25,13 +25,14 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
+    padding: 15px; /* Add padding for small screens */
 }
 
 /* ===== Main Container ===== */
 .dashboard-container {
     width: 100%;
     max-width: 500px;
-    margin: 20px;
+    margin: 20px 0; /* Use vertical margin only */
 }
 
 /* ===== Header ===== */
@@ -71,6 +72,7 @@ body {
     border: 1px solid #ddd;
     font-family: var(--font-family);
     transition: all 0.3s ease;
+    font-size: 1rem; /* Set base font size */
 }
 .input-group input:focus {
     outline: none;
@@ -91,6 +93,7 @@ body {
     transition: transform 0.2s, box-shadow 0.2s;
     background: linear-gradient(135deg, var(--primary-color), #a777e3);
     margin-top: 10px;
+    text-decoration: none; /* Added for <a> tags styled as buttons */
 }
 .btn:hover {
     transform: translateY(-2px);
@@ -99,10 +102,10 @@ body {
 
 /* ===== Secondary Button ===== */
 .btn-secondary {
-    background-color: #6c757d;
+    background: #6c757d; /* Darker secondary color */
     color: white;
     text-align: center;
-    display: inline-block;
+    display: block; /* Make it full-width */
     padding: 15px;
     border-radius: 8px;
     font-size: 1em;
@@ -113,6 +116,21 @@ body {
     margin-top: 15px;
 }
 .btn-secondary:hover {
+    background: #5a6268;
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* ===== Responsive Adjustments ===== */
+@media (max-width: 480px) {
+    .form-container {
+        padding: 20px;
+    }
+    .header h1 {
+        font-size: 1.5rem;
+    }
+    .btn, .btn-secondary {
+        padding: 12px;
+        font-size: 0.95rem;
+    }
 }

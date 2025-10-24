@@ -20,8 +20,18 @@
         </nav>
 
         <main class="main-content">
+            <div class="overlay"></div>
+
             <header class="header">
+                <button id="menu-toggle"><i class="fa fa-bars"></i></button>
+
                 <h1>{{ class_name }}</h1>
+
+                <div class="profile">
+                    <div class="profile-info">
+                        <span>{{ teacher_username }}</span><i class="fas fa-chevron-down" style="margin-left:10px; font-size:0.8em;"></i>
+                    </div>
+                </div>
             </header>
 
             <div class="class-info-header">
@@ -66,5 +76,16 @@
             </div>
         </main>
     </div>
+
+    <script>
+        document.getElementById('menu-toggle').addEventListener('click', function() {
+            document.querySelector('.sidebar').classList.toggle('show');
+            document.querySelector('.overlay').classList.toggle('show');
+        });
+        document.querySelector('.overlay').addEventListener('click', function() {
+            document.querySelector('.sidebar').classList.remove('show');
+            this.classList.remove('show');
+        });
+    </script>
 </body>
 </html>

@@ -9,11 +9,13 @@ body {
     align-items: center;
     height: 100vh;
     text-align: center;
+    padding: 0 15px; /* Add padding for small screens */
 }
 
 /* Main container for the error content */
 .error-container {
     max-width: 600px;
+    width: 100%; /* Make it full-width up to max-width */
     padding: 40px;
     background-color: #ffffff;
     border-radius: 12px;
@@ -70,5 +72,30 @@ body {
     to {
         opacity: 1;
         transform: translateY(0);
+    }
+}
+
+/* ===== Responsive Adjustments ===== */
+@media (max-width: 480px) {
+    .error-container {
+        padding: 25px; /* Reduce padding */
+    }
+
+    .error-code {
+        font-size: 4.5rem; /* Significantly reduce font size */
+    }
+
+    .error-heading {
+        font-size: 1.5rem; /* Reduce font size */
+    }
+
+    .error-message {
+        font-size: 0.9rem; /* Reduce font size */
+        margin-bottom: 25px;
+    }
+
+    .home-button {
+        padding: 10px 20px;
+        font-size: 0.9rem;
     }
 }

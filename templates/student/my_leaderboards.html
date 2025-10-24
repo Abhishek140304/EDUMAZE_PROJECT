@@ -11,7 +11,7 @@
 <body>
     <div class="dashboard-container">
         <nav class="sidebar">
-            <div class="sidebar-header"><i class="fa-solid fa-chalkboard-user"></i><h2>QuizMaster</h2></div>
+            <div class="sidebar-header"><i class="fa-solid fa-graduation-cap"></i><h2>QuizMaster</h2></div>
             <div class="sidebar-nav">
                 <a href="/student_dashboard"><i class="fa fa-home"></i> Dashboard</a>
                 <a href="/join_classroom"><i class="fa fa-door-open"></i> Join Classroom</a>
@@ -21,7 +21,11 @@
         </nav>
 
         <main class="main-content">
+            <div class="overlay"></div>
+
             <header class="header">
+                <button id="menu-toggle"><i class="fa fa-bars"></i></button>
+
                 <h1>My Quiz Leaderboards</h1>
                 <div class="profile">
                     <div class="profile-info">
@@ -53,5 +57,16 @@
             </section>
         </main>
     </div>
+
+    <script>
+        document.getElementById('menu-toggle').addEventListener('click', function() {
+            document.querySelector('.sidebar').classList.toggle('show');
+            document.querySelector('.overlay').classList.toggle('show');
+        });
+        document.querySelector('.overlay').addEventListener('click', function() {
+            document.querySelector('.sidebar').classList.remove('show');
+            this.classList.remove('show');
+        });
+    </script>
 </body>
 </html>

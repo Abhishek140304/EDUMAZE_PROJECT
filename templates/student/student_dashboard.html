@@ -12,7 +12,7 @@
         <nav class="sidebar">
             <div class="sidebar-header"><i class="fa-solid fa-graduation-cap"></i><h2>QuizMaster</h2></div>
             <div class="sidebar-nav">
-                <a href="#" class="active"><i class="fa fa-home"></i> Dashboard</a>
+                <a href="/student_dashboard" class="active"><i class="fa fa-home"></i> Dashboard</a>
                 <a href="/join_classroom"><i class="fa fa-door-open"></i> Join Classroom</a>
                 <a href="/my_leaderboards"><i class="fa fa-trophy"></i> Leaderboards</a>
             </div>
@@ -20,9 +20,13 @@
         </nav>
 
         <main class="main-content">
+            <div class="overlay"></div>
+
             <header class="header">
+                <button id="menu-toggle"><i class="fa fa-bars"></i></button>
+
                 <h1>Hello, {{ student_name }}!</h1>
-                <div class="profile" onclick="toggleProfileDropdown()">
+                <div class="profile">
                     <div class="profile-info">
                         <span>{{ student_username }}</span>
                         <i class="fas fa-chevron-down" style="margin-left:10px; font-size:0.8em;"></i>
@@ -35,7 +39,6 @@
             </header>
 
             <section class="card-grid">
-                <!-- Join Classroom Card -->
                 <a href="/join_classroom" style="text-decoration:none; color:inherit;">
                     <div class="card">
                         <div class="icon">
@@ -46,7 +49,6 @@
                     </div>
                 </a>
 
-                <!-- Classroom Cards -->
                 {{^classrooms}}
                     <div class="card">
                         <div class="icon">
@@ -74,14 +76,37 @@
     </div>
 
     <script>
-        function toggleProfileDropdown() {
-            const dropdown = document.getElementById("profileDropdown");
-            dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
-        }
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuToggle = document.getElementById('menu-toggle');
+            const sidebar = document.querySelector('.sidebar');
+            const overlay = document.querySelector('.overlay');
+            const profile = document.querySelector('.profile');
+            const profileDropdown = document.getElementById('profileDropdown');
 
-        window.addEventListener("click", function(e) {
-            const dropdown = document.getElementById("profileDropdown");
-            if (!e.target.closest(".profile")) dropdown.style.display = "none";
+            // Sidebar Toggle
+            menuToggle.addEventListener('click', function() {
+                sidebar.classList.toggle('show');
+                overlay.classList.toggle('show');
+            });
+
+            // Hide sidebar when overlay is clicked
+            overlay.addEventListener('click', function() {
+                sidebar.classList.remove('show');
+                this.classList.remove('show');
+            });
+
+            // Profile Dropdown Toggle
+            profile.addEventListener('click', function(e) {
+                e.stopPropagation(); // Prevent click from bubbling up to window
+                profileDropdown.style.display = profileDropdown.style.display === 'block' ? 'none' : 'block';
+            });
+
+            // Hide dropdown when clicking anywhere else
+            window.addEventListener('click', function(e) {
+                if (!profile.contains(e.target)) {
+                    profileDropdown.style.display = 'none';
+                }
+            });
         });
     </script>
 </body>

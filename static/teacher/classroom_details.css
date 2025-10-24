@@ -25,6 +25,7 @@ body {
     line-height: 1.6;
     display: flex;
     min-height: 100vh;
+    overflow-x: hidden; /* Prevent horizontal scroll */
 }
 
 /* ===== Dashboard Layout ===== */
@@ -32,6 +33,7 @@ body {
 .sidebar {
     width: 260px; background: var(--surface-color); padding: 20px;
     display: flex; flex-direction: column; border-right: 1px solid #e0e0e0;
+    transition: transform 0.3s ease-in-out; /* Added for mobile slide */
 }
 .sidebar-header { display: flex; align-items: center; margin-bottom: 40px; }
 .sidebar-header i { font-size: 2rem; color: var(--primary-color); }
@@ -47,7 +49,22 @@ body {
 .sidebar-footer a { display: flex; align-items: center; text-decoration: none; color: var(--subtle-text-color); }
 .sidebar-footer i { margin-right: 10px; }
 
-.main-content { flex-grow: 1; padding: 40px; overflow-y: auto; }
+.main-content { flex-grow: 1; padding: 40px; overflow-y: auto; position: relative; }
+
+/* --- Added Overlay --- */
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 998;
+}
+.overlay.show {
+    display: block;
+}
 
 /* ===== Header ===== */
 .header {
@@ -55,6 +72,23 @@ body {
     margin-bottom: 40px; animation: fadeIn 0.5s ease-out;
 }
 .header h1 { font-size: 2rem; }
+
+/* --- Added Menu Toggle --- */
+#menu-toggle {
+    display: none; /* Hidden by default */
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--text-color);
+    cursor: pointer;
+    margin-right: 15px;
+}
+
+/* --- Added Profile Section (from dashboard) --- */
+.profile { position: relative; cursor: pointer; }
+.profile-info { display: flex; align-items: center; }
+.profile-info i { margin-left: 10px; font-size: 0.8em; }
+
 
 /* ===== Class Info Section ===== */
 .class-info-header {
@@ -88,6 +122,7 @@ body {
     border-radius: var(--border-radius);
     text-decoration: none; font-weight: 500;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: inline-block; /* Added for better spacing */
 }
 .btn-action:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(0,0,0,0.08); }
 
@@ -158,3 +193,72 @@ body {
 .details-card:nth-child(1) { animation-delay: 0.1s; }
 .details-card:nth-child(2) { animation-delay: 0.2s; }
 .class-info-header { animation-delay: 0.05s; }
+
+/* ===== Responsive Sidebar Styles ===== */
+@media (max-width: 992px) {
+    .sidebar {
+        position: fixed; /* Make it an overlay */
+        left: 0;
+        top: 0;
+        height: 100%;
+        z-index: 1000; /* On top of everything */
+        transform: translateX(-100%); /* Hide it off-screen */
+        box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+    }
+    .sidebar.show {
+        transform: translateX(0); /* Show it */
+    }
+
+    #menu-toggle {
+        display: block; /* Show the hamburger button */
+    }
+
+    .header {
+        justify-content: flex-start; /* Align button and title to start */
+    }
+
+    .profile {
+        margin-left: auto; /* Push profile to the far right */
+    }
+
+    .main-content {
+        padding: 30px;
+    }
+}
+
+@media (max-width: 768px) {
+    .main-content {
+        padding: 20px;
+    }
+    .header h1 {
+        font-size: 1.5rem;
+    }
+    .details-grid {
+        grid-template-columns: 1fr; /* Stack cards on mobile */
+        gap: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .sidebar {
+        width: 240px; /* Make sidebar a bit smaller */
+    }
+    .header h1 {
+        font-size: 1.2rem;
+    }
+    .class-info-header {
+        padding: 20px;
+    }
+    .class-info-header h2 {
+        font-size: 1.2rem;
+    }
+    .btn-action {
+        width: 100%;
+        text-align: center;
+    }
+    .item-list li {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+}

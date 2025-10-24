@@ -20,7 +20,11 @@
         </nav>
 
         <main class="main-content">
+            <div class="overlay"></div>
+
             <header class="header">
+                <button id="menu-toggle"><i class="fa fa-bars"></i></button>
+
                 <h1>My Classrooms</h1>
                 <div class="profile">
                     <div class="profile-info">
@@ -36,26 +40,28 @@
                 </div>
                 
                 {{#classrooms}}
-                <table class="content-table">
-                    <thead>
-                        <tr>
-                            <th>Class Name</th>
-                            <th>Subject</th>
-                            <th>Class Code</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {{#.}}
-                        <tr>
-                            <td>{{ class_name }}</td>
-                            <td>{{ subject }}</td>
-                            <td class="class-code">{{ class_code }}</td>
-                            <td><a href="/classroom/{{class_code}}" class="btn-action">View</a></td>
-                        </tr>
-                        {{/.}}
-                    </tbody>
-                </table>
+                <div class="table-wrapper">
+                    <table class="content-table">
+                        <thead>
+                            <tr>
+                                <th>Class Name</th>
+                                <th>Subject</th>
+                                <th>Class Code</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#.}}
+                            <tr>
+                                <td>{{ class_name }}</td>
+                                <td>{{ subject }}</td>
+                                <td class="class-code">{{ class_code }}</td>
+                                <td><a href="/classroom/{{class_code}}" class="btn-action">View</a></td>
+                            </tr>
+                            {{/.}}
+                        </tbody>
+                    </table>
+                </div>
                 {{/classrooms}}
 
                 {{^classrooms}}
@@ -68,5 +74,16 @@
             </section>
         </main>
     </div>
+
+    <script>
+        document.getElementById('menu-toggle').addEventListener('click', function() {
+            document.querySelector('.sidebar').classList.toggle('show');
+            document.querySelector('.overlay').classList.toggle('show');
+        });
+        document.querySelector('.overlay').addEventListener('click', function() {
+            document.querySelector('.sidebar').classList.remove('show');
+            this.classList.remove('show');
+        });
+    </script>
 </body>
 </html>

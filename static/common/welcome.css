@@ -22,6 +22,7 @@ body {
     align-items: center;
     width: 100%;
     min-height: 100vh;
+    padding: 0 20px; /* Add horizontal padding */
     background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
     animation: fadeIn 1s ease-in-out;
 }
@@ -46,3 +47,21 @@ body {
 /* Animations */
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+/* ===== Responsive Adjustments ===== */
+@media (max-width: 480px) {
+    .welcome-content h1 {
+        font-size: 2.8rem; /* Reduce font size for mobile */
+        letter-spacing: 1px;
+    }
+
+    .welcome-content p {
+        font-size: 1rem; /* Reduce font size for mobile */
+        margin-bottom: 2.5rem; /* More space for the button */
+    }
+
+    .btn-main {
+        padding: 12px 25px;
+        font-size: 1rem;
+    }
+}

@@ -25,6 +25,7 @@ body {
     line-height: 1.6;
     display: flex;
     min-height: 100vh;
+    overflow-x: hidden; /* Prevent horizontal scroll */
 }
 
 /* ===== Dashboard Styles (Teacher Dashboard) ===== */
@@ -33,6 +34,7 @@ body {
 .sidebar {
     width: 260px; background: var(--surface-color); padding: 20px;
     display: flex; flex-direction: column; border-right: 1px solid #e0e0e0;
+    transition: transform 0.3s ease-in-out; /* Added for mobile slide */
 }
 .sidebar-header { display: flex; align-items: center; margin-bottom: 40px; }
 .sidebar-header i { font-size: 2rem; color: var(--primary-color); }
@@ -46,13 +48,39 @@ body {
 .sidebar-nav a i { margin-right: 15px; width: 20px; text-align: center; }
 .sidebar-footer { margin-top: auto; }
 
-.main-content { flex-grow: 1; padding: 40px; overflow-y: auto; }
+.main-content { flex-grow: 1; padding: 40px; overflow-y: auto; position: relative; }
+
+/* --- Added Overlay --- */
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 998; /* Below sidebar, above content */
+}
+.overlay.show {
+    display: block;
+}
 
 .header {
     display: flex; justify-content: space-between; align-items: center;
     margin-bottom: 40px; animation: fadeIn 0.5s ease-out;
 }
 .header h1 { font-size: 2rem; }
+
+/* --- Added Menu Toggle --- */
+#menu-toggle {
+    display: none; /* Hidden by default */
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--text-color);
+    cursor: pointer;
+    margin-right: 15px;
+}
 
 .profile { position: relative; cursor: pointer; }
 .profile-info { display: flex; align-items: center; }
@@ -73,6 +101,31 @@ body {
 
 .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
 
+/* Styles for all_leaderboards.html */
+.details-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
+.details-card {
+    background: var(--surface-color);
+    border-radius: var(--border-radius);
+    padding: 25px;
+    box-shadow: var(--shadow);
+}
+.details-card h3 { border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 20px; }
+.item-list { list-style: none; }
+.item-list li {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 15px 0; border-bottom: 1px solid #f0f0f0;
+}
+.item-list li:last-child { border-bottom: none; }
+.btn-view-small {
+    padding: 5px 15px;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    text-decoration: none;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
 .card {
     background: var(--surface-color); padding: 25px; border-radius: var(--border-radius);
     box-shadow: var(--shadow); transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -90,3 +143,66 @@ body {
 .card:nth-child(2) { animation-delay: 0.2s; }
 .card:nth-child(3) { animation-delay: 0.3s; }
 .card:nth-child(4) { animation-delay: 0.4s; }
+
+
+/* ===== Responsive Sidebar Styles ===== */
+@media (max-width: 992px) {
+    .sidebar {
+        position: fixed; /* Make it an overlay */
+        left: 0;
+        top: 0;
+        height: 100%;
+        z-index: 1000; /* On top of everything */
+        transform: translateX(-100%); /* Hide it off-screen */
+        box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+    }
+    .sidebar.show {
+        transform: translateX(0); /* Show it */
+    }
+
+    #menu-toggle {
+        display: block; /* Show the hamburger button */
+    }
+
+    .header {
+        justify-content: flex-start; /* Align button and title to start */
+    }
+
+    .profile {
+        margin-left: auto; /* Push profile to the far right */
+    }
+
+    .main-content {
+        padding: 30px;
+    }
+}
+
+@media (max-width: 768px) {
+    .main-content {
+        padding: 20px;
+    }
+    .header h1 {
+        font-size: 1.5rem;
+    }
+    .card-grid {
+        grid-template-columns: 1fr; /* Stack cards on mobile */
+        gap: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .sidebar {
+        width: 240px; /* Make sidebar a bit smaller */
+    }
+    .header h1 {
+        font-size: 1.2rem;
+    }
+    .profile-info span {
+        display: none; /* Hide username on small screens, icon is enough */
+    }
+    .item-list li {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+}

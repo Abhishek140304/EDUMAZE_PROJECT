@@ -28,6 +28,7 @@ body {
     align-items: center;
     justify-content: center;
     min-height: 100vh;
+    padding: 15px; /* Added for small screens */
 }
 
 .success-card {
@@ -106,5 +107,21 @@ p strong {
     100% {
         opacity: 1;
         transform: scale(1);
+    }
+}
+
+/* ===== Responsive Adjustments ===== */
+@media (max-width: 480px) {
+    .success-card {
+        padding: 30px 25px;
+    }
+    h1 {
+        font-size: 1.8rem;
+    }
+    .icon-container {
+        font-size: 3rem;
+    }
+    p {
+        font-size: 1rem;
     }
 }

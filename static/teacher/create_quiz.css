@@ -51,10 +51,20 @@ body {
 .input-group input, .input-group select {
     width: 100%; padding: 12px 12px 12px 40px; border: 1px solid #ddd;
     border-radius: 8px; font-family: var(--font-family); transition: all 0.3s ease;
+    font-size: 1rem; /* Ensure consistent font size */
 }
 .input-group input:focus, .input-group select:focus {
     outline: none; border-color: var(--primary-color);
     box-shadow: 0 0 0 3px rgba(110, 142, 251, 0.2);
+}
+/* Fix for select padding with icon */
+.input-group select {
+    padding-left: 12px; /* No icon for select */
+}
+.input-group label {
+    font-weight: 500;
+    margin-bottom: 5px;
+    display: block;
 }
 
 .btn {
@@ -77,6 +87,7 @@ body {
 
 .question-card h4 {
     margin-top: 0;
+    margin-bottom: 20px;
     border-bottom: 1px solid #eee;
     padding-bottom: 10px;
 }
@@ -90,14 +101,18 @@ body {
 .option-group input[type="radio"] {
     margin-right: 10px;
     flex-shrink: 0;
+    /* Make radio buttons larger and easier to click */
+    width: 1.2em;
+    height: 1.2em;
+    cursor: pointer;
 }
 
-.option-group input[type="text"] { width: 100%; }
+.option-group input[type="text"] { width: 100%; padding-left: 12px; }
 
 .remove-question-btn {
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 15px;
+    right: 15px;
     background: #e74c3c;
     color: white;
     border: none;
@@ -106,12 +121,42 @@ body {
     height: 30px;
     cursor: pointer;
     font-weight: bold;
+    font-size: 1.1rem;
+    line-height: 30px;
 }
 
 /* Animations */
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes fadeIn { from { opacity: 0; } to: { opacity: 1; } }
 @keyframes popIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-.card:nth-child(1) { animation-delay: 0.1s; }
-.card:nth-child(2) { animation-delay: 0.2s; }
-.card:nth-child(3) { animation-delay: 0.3s; }
-.card:nth-child(4) { animation-delay: 0.4s; }
+.card { animation-delay: 0.1s; }
+
+
+/* ===== Responsive Form Styles ===== */
+@media (max-width: 768px) {
+    .main-content {
+        padding: 20px;
+    }
+    .header h1 {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .main-content {
+        padding: 10px;
+    }
+    .card, .question-card {
+        padding: 15px;
+    }
+    .header h1 {
+        font-size: 1.3rem;
+        text-align: center;
+    }
+    .option-group {
+        /* Allow text input to wrap below radio button if needed */
+        flex-wrap: wrap; 
+    }
+    .option-group input[type="radio"] {
+        margin-bottom: 5px;
+    }
+}
