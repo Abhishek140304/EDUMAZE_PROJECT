@@ -168,6 +168,10 @@ body {
     animation: fadeIn 0.3s ease;
 }
 
+.profile-dropdown.show {
+    display: block;
+}
+
 .profile-dropdown a {
     display: flex;
     align-items: center;

@@ -98,6 +98,9 @@ body {
 }
 .profile-dropdown a:hover { background-color: #f4f7fc; }
 .profile-dropdown i { margin-right: 10px; }
+.profile-dropdown.show {
+    display: block;
+}
 
 .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
 

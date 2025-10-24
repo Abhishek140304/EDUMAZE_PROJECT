@@ -31,6 +31,10 @@
                     <div class="profile-info">
                         <span>{{ student_username }}</span><i class="fas fa-chevron-down" style="margin-left:10px; font-size:0.8em;"></i>
                     </div>
+                    <div class="profile-dropdown">
+                        <a href="/change_password"><i class="fas fa-key"></i> Change Password</a>
+                        <a href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
                 </div>
             </header>
             
@@ -59,13 +63,42 @@
     </div>
 
     <script>
-        document.getElementById('menu-toggle').addEventListener('click', function() {
-            document.querySelector('.sidebar').classList.toggle('show');
-            document.querySelector('.overlay').classList.toggle('show');
-        });
-        document.querySelector('.overlay').addEventListener('click', function() {
-            document.querySelector('.sidebar').classList.remove('show');
-            this.classList.remove('show');
+            document.addEventListener('DOMContentLoaded', function() {
+            const menuToggle = document.getElementById('menu-toggle');
+            const sidebar = document.querySelector('.sidebar');
+            const overlay = document.querySelector('.overlay');
+        
+            // --- Sidebar Toggle ---
+            menuToggle.addEventListener('click', function() {
+                sidebar.classList.toggle('show');
+                overlay.classList.toggle('show');
+            });
+
+            overlay.addEventListener('click', function() {
+                sidebar.classList.remove('show');
+                this.classList.remove('show');
+            });
+
+        
+            // --- Profile Dropdown Logic ---
+        
+            // 1. Get the elements by their *class*
+            const profileInfo = document.querySelector('.profile-info');
+            const profileDropdown = document.querySelector('.profile-dropdown');
+
+            // 2. Toggle the .show class on click
+            profileInfo.addEventListener('click', function(e) {
+                e.stopPropagation(); // Stop click from bubbling to the window
+                profileDropdown.classList.toggle('show');
+            });
+
+            // 3. Hide dropdown when clicking anywhere else
+            window.addEventListener('click', function(e) {
+                // Check if dropdown is open AND the click was not on the profile
+                if (profileDropdown.classList.contains('show') && !profileInfo.contains(e.target)) {
+                    profileDropdown.classList.remove('show');
+                }
+            });
         });
     </script>
 </body>

@@ -152,6 +152,92 @@ int main(){
         return crow::response(page.render());
     });
 
+    // --- SHOW CHANGE PASSWORD PAGE ---
+    CROW_ROUTE(app, "/change_password")
+    ([&app](const crow::request& req) -> crow::response {
+        auto& session = app.get_context<Session>(req);
+        std::string username = session.get<std::string>("username");
+
+        if (username.empty()) {
+            return crow::response(303, "/error");
+        }
+
+        crow::mustache::context ctx;
+        ctx["username"] = username;
+
+        // Check for error/success messages from a redirect
+        if (req.url_params.get("error")) {
+            std::string error = req.url_params.get("error");
+            if (error == "mismatch") {
+                ctx["error_message"] = "New passwords do not match. Please try again.";
+            } else if (error == "incorrect") {
+                ctx["error_message"] = "Your current password was incorrect.";
+            } else if (error == "notfound") {
+                 ctx["error_message"] = "Could not find user account.";
+            }
+        }
+        if (req.url_params.get("success")) {
+             ctx["success_message"] = "Password updated successfully!";
+        }
+        
+        auto page = crow::mustache::load("common/change_password.html");
+        return crow::response(page.render(ctx));
+    });
+
+    // --- HANDLE CHANGE PASSWORD SUBMISSION ---
+    CROW_ROUTE(app, "/change_password_post").methods("POST"_method)
+    ([&app, &user_table](const crow::request& req) -> crow::response {
+        auto& session = app.get_context<Session>(req);
+        std::string username = session.get<std::string>("username");
+        std::string user_type = session.get<std::string>("user_type");
+
+        if (username.empty() || user_type.empty()) {
+            return crow::response(303, "/error"); 
+        }
+
+        auto body = crow::query_string("?" + req.body);
+        std::string current_pass = body.get("current_password");
+        std::string new_pass = body.get("new_password");
+        std::string confirm_pass = body.get("confirm_password");
+
+        if (new_pass.empty() || new_pass != confirm_pass) {
+            return crow::response(303, "/change_password?error=mismatch");
+        }
+
+        bool password_updated = false;
+
+        if (user_type == "student") {
+            student_data* student = user_table.findStudent(username);
+            if (!student) {
+                return crow::response(303, "/change_password?error=notfound");
+            }
+            if (student->password == current_pass) {
+                student->password = new_pass; // Update password in memory
+                user_table.saveStudentsToFile(); // Save to students.json
+                password_updated = true;
+            }
+
+        } else if (user_type == "teacher") {
+            teacher_data* teacher = user_table.findTeacher(username);
+            if (!teacher) {
+                return crow::response(303, "/change_password?error=notfound");
+            }
+            if (teacher->password == current_pass) {
+                teacher->password = new_pass; // Update password in memory
+                user_table.saveTeachersToFile(); // Save to teachers.json
+                password_updated = true;
+            }
+        }
+
+        if (password_updated) {
+            // Success! Redirect back to the same page with a success message
+            return crow::response(303, "/change_password?success=true");
+        } else {
+            // Failure! (Incorrect current password)
+            return crow::response(303, "/change_password?error=incorrect");
+        }
+    });
+
     registerStudentsRoutes(app, user_table, classroom_table, quiz_table);
 
     registerTeachersRoutes(app,user_table,classroom_table,quiz_table);

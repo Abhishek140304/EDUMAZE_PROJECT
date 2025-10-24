@@ -91,7 +91,23 @@ body {
 
 .profile { position: relative; cursor: pointer; }
 .profile-info { display: flex; align-items: center; }
-.profile-info i { margin-left: 10px; font-size: 0.8em; }
+.profile-info img { width: 40px; height: 40px; border-radius: 50%; margin-right: 10px; }
+.profile-dropdown {
+    display: none; position: absolute; right: 0; top: 50px;
+    background: var(--surface-color); border-radius: 10px;
+    box-shadow: var(--shadow); width: 160px; z-index: 100;
+    overflow: hidden; animation: fadeIn 0.3s ease;
+}
+.profile-dropdown a {
+    display: flex; align-items: center; padding: 12px 15px;
+    color: var(--subtle-text-color); text-decoration: none;
+    transition: background-color 0.2s;
+}
+.profile-dropdown a:hover { background-color: #f4f7fc; }
+.profile-dropdown i { margin-right: 10px; }
+.profile-dropdown.show {
+    display: block;
+}
 
 .content-container {
     background-color: var(--surface-color);

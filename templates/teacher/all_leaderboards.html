@@ -31,6 +31,10 @@
                     <div class="profile-info">
                         <span>{{ teacher_username }}</span><i class="fas fa-chevron-down" style="margin-left:10px; font-size:0.8em;"></i>
                     </div>
+                    <div class="profile-dropdown">
+                        <a href="/change_password"><i class="fas fa-key"></i> Change Password</a>
+                        <a href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
                 </div>
             </header>
             
@@ -66,6 +70,24 @@
         document.querySelector('.overlay').addEventListener('click', function() {
             document.querySelector('.sidebar').classList.remove('show');
             this.classList.remove('show');
+        });
+
+        const profileInfo = document.querySelector('.profile-info');
+        const profileDropdown = document.querySelector('.profile-dropdown');
+
+        profileInfo.addEventListener('click', function(event) {
+            // This stops the click from immediately being caught by the 'window' listener below
+            event.stopPropagation();
+            // Toggle the .show class on the dropdown menu
+            profileDropdown.classList.toggle('show');
+        });
+
+        // --- NEW: Close dropdown if clicking anywhere else ---
+        window.addEventListener('click', function(event) {
+            // Check if the dropdown is open AND if the click was *outside* the profile area
+            if (profileDropdown.classList.contains('show') && !profileInfo.contains(event.target)) {
+                profileDropdown.classList.remove('show');
+            }
         });
     </script>
 </body>
