@@ -8,7 +8,7 @@ set(CMAKE_CXX_EXTENSIONS      OFF)
 
 set(INCLUDE_PATHS C:/Users/lenovo/asio-1.36.0/asio-1.36.0/include C:/Crow/include)
 
-add_executable(dsa_project
+add_executable(Edumaze
     main.cpp
     source/Classroom.cpp
     source/Quiz.cpp
@@ -17,7 +17,7 @@ add_executable(dsa_project
     source/QuizAttempt.cpp
 )
 
-target_include_directories(dsa_project PUBLIC 
+target_include_directories(Edumaze PUBLIC 
     ${INCLUDE_PATHS}
     ${CMAKE_SOURCE_DIR}/include
 )
@@ -25,9 +25,9 @@ target_include_directories(dsa_project PUBLIC
 
 # On some toolchains you must link the filesystem library manually
 if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-    target_link_libraries(dsa_project PRIVATE stdc++fs)
+    target_link_libraries(Edumaze PRIVATE stdc++fs)
 endif()
 
 if (WIN32)
-    target_link_libraries(dsa_project PRIVATE ws2_32 mswsock)
+    target_link_libraries(Edumaze PRIVATE ws2_32 mswsock)
 endif()
