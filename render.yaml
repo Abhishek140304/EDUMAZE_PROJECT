@@ -4,7 +4,7 @@ services:
     env: docker
     plan: free
     repo: https://github.com/Abhishek140304/EDUMAZE_PROJECT.git
-    branch: main
+    branch: render
     dockerfilePath: ./Dockerfile
     healthCheckPath: /
     envVars:
