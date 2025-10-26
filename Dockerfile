@@ -8,6 +8,8 @@ RUN apt-get update && apt-get install -y cmake
 WORKDIR /app
 COPY . .
 
+RUN ls -la /app/include
+
 # Build your application
 # The CMAKE_PREFIX_PATH tells cmake where to find the headers
 RUN cmake . -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="/app/vendor/asio/asio/include;/app/vendor/Crow/include" && \
