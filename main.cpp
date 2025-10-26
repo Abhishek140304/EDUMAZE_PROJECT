@@ -117,6 +117,12 @@ int main(){
         std::string pass=req_body.get("password");
         std::string role=req_body.get("role");
 
+        if(user_table.findUsername(email)){
+            res.code = 303;
+            res.add_header("Location", "/error");
+            return res;
+        }
+
         auto& session=app.get_context<Session>(req);
         session.set("username",username);
         session.set("user_type",role);
