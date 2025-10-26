@@ -10,7 +10,9 @@ COPY . .
 
 # Build your application
 # The CMAKE_PREFIX_PATH tells cmake where to find the headers
-RUN cmake . -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="/app/vendor/asio/asio/include;/app/vendor/Crow/include" && \
+RUN cmake . -DCMAKE_BUILD_TYPE=Release \
+            -DASIO_INCLUDE_DIR="/app/vendor/asio/asio/include" \
+            -DCMAKE_PREFIX_PATH="/app/vendor/Crow" && \
     cmake --build .
 
 # Final stage: create a smaller runtime image
