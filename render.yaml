@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: cpp-farmer-vendor
+    env: docker
+    plan: free
+    repo: https://github.com/Abhishek140304/EDUMAZE_PROJECT.git
+    branch: main
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /
+    envVars:
+      - key: PORT
+        value: 18080
