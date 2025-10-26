@@ -4,7 +4,7 @@
 #include "crow.h"
 #include "crow/middlewares/cookie_parser.h"
 #include "crow/middlewares/session.h"
-#include "Users.hpp"
+#include "users.hpp"
 #include "Classroom.hpp"
 #include "Quiz.hpp"
 #include "QuizAttempt.hpp"
