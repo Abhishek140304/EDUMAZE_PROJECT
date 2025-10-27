@@ -1,22 +1,15 @@
 [
     {
-        "quizId": "N29EZ4",
-        "resultId": "E67PGQ",
-        "score": 0,
-        "studentUsername": "Abhishek_111",
-        "submittedAnswers": [
-            1
+        "class_code": "PSHVJ9",
+        "class_name": "CSE B",
+        "quizIds": [
+            "N29EZ4"
         ],
-        "timeTakenSeconds": 2.0
-    },
-    {
-        "quizId": "N29EZ4",
-        "resultId": "WOWUEI",
-        "score": 1,
-        "studentUsername": "Ankit_111",
-        "submittedAnswers": [
-            0
+        "student_usernames": [
+            "Abhishek_111",
+            "Ankit_111"
         ],
-        "timeTakenSeconds": 3.0
+        "subject": "DSA",
+        "teacher_username": "Yuvraj_111"
     }
 ]

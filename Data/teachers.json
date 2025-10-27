@@ -1,18 +1,11 @@
 [
     {
         "classroomIds": [
-            "SPVH8J"
+            "PSHVJ9"
         ],
         "email": "106124142@nitt.edu",
         "name": "Yuvraj Meena",
         "password": "yuvraj",
         "username": "Yuvraj_111"
-    },
-    {
-        "classroomIds": [],
-        "email": "106124006@nitt.edu",
-        "name": "Abhimanyu",
-        "password": "abhimanyu",
-        "username": "Abhimanyu_111"
     }
 ]

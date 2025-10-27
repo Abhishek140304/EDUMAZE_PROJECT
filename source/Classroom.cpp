@@ -1,7 +1,15 @@
+/*
+ * Description: Implements JSON serialization for classroom_data and registers all Crow routes related to classroom management, including creation (teacher) and joining (student).
+ */
+
 #include "Common_Route.hpp"
 
 using njson = nlohmann::json;
 
+/*
+ * `to_json` overload for `classroom_data`.
+ * Called by nlohmann::json when serializing a classroom (e.g., saving to file).
+ */
 void to_json(njson& j, const classroom_data& c) {
     j = njson{
         {"class_name", c.class_name},
@@ -13,11 +21,21 @@ void to_json(njson& j, const classroom_data& c) {
     };
 }
 
+/*
+ * Registers all routes related to classroom management (for both teachers and students).
+ */
 void registerClassroomRoutes(crow::App<crow::CookieParser,Session>& app, user_hashTable& user_table, classroom_hashTable& classroom_table, quiz_hashTable& quiz_table){
+
+    /*
+     * Route: /create_classroom (GET)
+     * Description: Displays the HTML form for a teacher to create a new classroom.
+     */
+
     CROW_ROUTE(app, "/create_classroom")([&app](const crow::request& req)->crow::response {
         auto& session=app.get_context<Session>(req);
         std::string user_type=session.get<std::string>("user_type");
 
+        // Security Check
         if(user_type!="teacher"){
             crow::response res(303);
             res.add_header("Location", "/error");
@@ -32,6 +50,10 @@ void registerClassroomRoutes(crow::App<crow::CookieParser,Session>& app, user_ha
 
     });
 
+    /*
+     * Route: /create_classroom_post (POST)
+     * Description: Handles the submission of the new classroom form.
+     */
     CROW_ROUTE(app,"/create_classroom_post").methods("POST"_method)([&app,&user_table, &classroom_table](const crow::request& req) -> crow::response {
         auto req_body = crow::query_string(("?" + req.body).c_str());
 
@@ -49,6 +71,7 @@ void registerClassroomRoutes(crow::App<crow::CookieParser,Session>& app, user_ha
         std::string classname=req_body.get("classname");
         std::string subject=req_body.get("subject");
 
+        // O(1) average-case lookup
         teacher_data* teacher=user_table.findTeacher(username);
         if(!teacher){
             crow::response res(303);
@@ -56,18 +79,27 @@ void registerClassroomRoutes(crow::App<crow::CookieParser,Session>& app, user_ha
             return res;
         }
 
+        // O(1) average-case insertion
         std::string new_class_code=classroom_table.addClassroom(classname,subject,teacher);
+
+        // Link the new classroom to the teacher
         teacher->classroomIds.push_back(new_class_code);
 
+        // Persist changes
         user_table.saveTeachersToFile();
         classroom_table.saveClassroomsToFile();
 
+        // Redirect to a success page displaying the new code
         crow::response res(303);
         res.add_header("Location","/classroom_created?code="+new_class_code);
         return res;
 
     });
 
+    /*
+     * Route: /classroom_created
+     * Description: Success page that displays the newly generated classroom code.
+     */
     CROW_ROUTE(app,"/classroom_created")([](const crow::request& req){
         const char* code = req.url_params.get("code");
 
@@ -84,7 +116,10 @@ void registerClassroomRoutes(crow::App<crow::CookieParser,Session>& app, user_ha
         return crow::response(page.render(ctx));
     });
 
-
+    /*
+     * Route: /my_classrooms
+     * Description: (Teacher) Displays a list of all classrooms owned by the teacher.
+     */
     CROW_ROUTE(app, "/my_classrooms")
     ([&app, &user_table, &classroom_table](const crow::request& req) -> crow::response {
         auto& session = app.get_context<Session>(req);
@@ -95,6 +130,7 @@ void registerClassroomRoutes(crow::App<crow::CookieParser,Session>& app, user_ha
             return crow::response(303, "/error");
         }
 
+        // O(1) average-case lookup
         teacher_data* teacher = user_table.findTeacher(username);
         if (!teacher) {
             return crow::response(303, "/error");
@@ -105,7 +141,9 @@ void registerClassroomRoutes(crow::App<crow::CookieParser,Session>& app, user_ha
 
         std::vector<crow::json::wvalue> classrooms_list;
 
+        // Iterate through the teacher's list of class codes
         for (const auto& class_code : teacher->classroomIds) {
+            // O(1) average-case lookup for each class
             classroom_data* room = classroom_table.findClassroom(class_code);
             if (room) {
                 crow::json::wvalue classroom_obj;
@@ -125,7 +163,11 @@ void registerClassroomRoutes(crow::App<crow::CookieParser,Session>& app, user_ha
     });
 
 
-
+    /*
+     * Route: /classroom/<string>
+     * Description: (Teacher) Displays a detailed view of a single classroom,
+     * showing the list of students and quizzes.
+     */
     CROW_ROUTE(app, "/classroom/<string>")
     ([&app, &user_table, &classroom_table, &quiz_table](const crow::request& req, const std::string& class_code) -> crow::response {
         auto& session = app.get_context<Session>(req);
@@ -135,6 +177,7 @@ void registerClassroomRoutes(crow::App<crow::CookieParser,Session>& app, user_ha
             return crow::response(303, "/error");
         }
 
+        // O(1) average-case lookup
         classroom_data* room = classroom_table.findClassroom(class_code);
         if (!room) {
             return crow::response(404, "/error");
@@ -145,8 +188,10 @@ void registerClassroomRoutes(crow::App<crow::CookieParser,Session>& app, user_ha
         ctx["subject"] = room->subject;
         ctx["class_code"] = room->class_code;
 
+        // Populate the list of students in the classroom
         std::vector<crow::json::wvalue> students_list;
         for (const auto& student_username : room->student_usernames) {
+            // O(1) average-case lookup for each student
             student_data* student = user_table.findStudent(student_username);
             if (student) {
                 crow::json::wvalue student_obj;
@@ -159,8 +204,10 @@ void registerClassroomRoutes(crow::App<crow::CookieParser,Session>& app, user_ha
             ctx["students"] = std::move(students_list);
         }
 
+        // Populate the list of quizzes in the classroom
         std::vector<crow::json::wvalue> quizzes_list;
         for (const auto& quiz_id : room->quizIds) {
+            // O(1) average-case lookup for each quiz
             quiz_data* quiz = quiz_table.findQuiz(quiz_id);
             if (quiz) {
                 crow::json::wvalue quiz_obj;
@@ -178,6 +225,10 @@ void registerClassroomRoutes(crow::App<crow::CookieParser,Session>& app, user_ha
         return crow::response(page.render(ctx));
     });
 
+    /*
+     * Route: /join_classroom (GET)
+     * Description: (Student) Displays the HTML form for a student to join a classroom using a class code.
+     */
     CROW_ROUTE(app, "/join_classroom")([&app](const crow::request& req){
         auto& session=app.get_context<Session>(req);
         std::string user_type=session.get<std::string>("user_type");
@@ -194,6 +245,10 @@ void registerClassroomRoutes(crow::App<crow::CookieParser,Session>& app, user_ha
         return crow::response(page.render(ctx));
     });
 
+    /*
+     * Route: /join_classroom_post (POST)
+     * Description: (Student) Handles the submission of the "join classroom" form.
+     */
     CROW_ROUTE(app, "/join_classroom_post").methods("POST"_method)([&app, &user_table, &classroom_table](const crow::request& req) -> crow::response {
         auto& session=app.get_context<Session>(req);
 
@@ -216,6 +271,7 @@ void registerClassroomRoutes(crow::App<crow::CookieParser,Session>& app, user_ha
         }
         std::string class_code(code_cstr);
 
+        // O(1) average-case lookup to find the classroom
         classroom_data* classroom=classroom_table.findClassroom(class_code);
         if(!classroom){
             crow::response res(303);
@@ -223,6 +279,7 @@ void registerClassroomRoutes(crow::App<crow::CookieParser,Session>& app, user_ha
             return res;
         }
 
+        // O(1) average-case lookup to find the student
         student_data* student=user_table.findStudent(username);
         if(!student){
             crow::response res(303);
@@ -230,14 +287,17 @@ void registerClassroomRoutes(crow::App<crow::CookieParser,Session>& app, user_ha
             return res;
         }
 
+        // Check if student is already in the class
         auto& students_in_class=classroom->student_usernames;
         if (std::find(students_in_class.begin(), students_in_class.end(), username) != students_in_class.end()) {
             return crow::response(303, "You are already in this classroom.");
         }
 
-        classroom->student_usernames.push_back(username);
-        student->classroomIds.push_back(class_code);
+        // Create the two-way link
+        classroom->student_usernames.push_back(username);   // Add student to class
+        student->classroomIds.push_back(class_code);    // Add class to student
 
+        // Persist changes
         classroom_table.saveClassroomsToFile();
         user_table.saveStudentsToFile();
 
@@ -247,6 +307,10 @@ void registerClassroomRoutes(crow::App<crow::CookieParser,Session>& app, user_ha
 
     });
 
+    /*
+     * Route: /classroom_joined
+     * Description: (Student) Success page shown after joining a classroom.
+     */
     CROW_ROUTE(app, "/classroom_joined")([&app, &classroom_table](const crow::request& req){
         auto& session = app.get_context<Session>(req);
         if (session.get<std::string>("user_type") != "student") {
@@ -257,6 +321,7 @@ void registerClassroomRoutes(crow::App<crow::CookieParser,Session>& app, user_ha
         
         const char* class_code = req.url_params.get("code");
 
+        // O(1) average-case lookup
         classroom_data* room=classroom_table.findClassroom(class_code);
         if(!room){
             crow::response res(303);
@@ -272,6 +337,11 @@ void registerClassroomRoutes(crow::App<crow::CookieParser,Session>& app, user_ha
         return crow::response(page.render(ctx));
     });
 
+    /*
+     * Route: /student/classroom/<string>
+     * Description: (Student) Displays a detailed view of a classroom,
+     * showing the quizzes available to attempt.
+     */
     CROW_ROUTE(app, "/student/classroom/<string>")([&app, &classroom_table, &quiz_table](const crow::request& req, const std::string& class_code) -> crow::response {
         auto& session=app.get_context<Session>(req);
         std::string user_type=session.get<std::string>("user_type");
@@ -279,6 +349,7 @@ void registerClassroomRoutes(crow::App<crow::CookieParser,Session>& app, user_ha
             return crow::response(303,"/error");
         }
 
+        // O(1) average-case lookup
         classroom_data* room=classroom_table.findClassroom(class_code);
         if(!room){
             return crow::response(404, "/error");
@@ -290,7 +361,9 @@ void registerClassroomRoutes(crow::App<crow::CookieParser,Session>& app, user_ha
         ctx["subject"]=room->subject;
 
         std::vector<crow::json::wvalue> quizzes_list;
+        // Iterate through the classroom's quiz IDs
         for(const auto& quiz_id: room->quizIds){
+            // O(1) average-case lookup for each quiz
             quiz_data* quiz=quiz_table.findQuiz(quiz_id);
             if(quiz){
                 crow::json::wvalue quiz_obj;
